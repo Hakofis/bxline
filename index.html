@@ -1,72 +1,65 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BXLANE International & Consulting BV | Havaalanı Transferi</title>
-  <meta name="description" content="BXLANE International & Consulting BV — Zaventem/Brüksel ve çevresinde güvenilir havaalanı transferi. Sabit fiyat, profesyonel sürücüler.">
+  <title>BXLANE International & Consulting BV | Airport Transfers</title>
+  <meta name="description" content="Reliable airport transfers in and around Zaventem/Brussels. Fixed prices, professional drivers.">
   <style>
-    :root{
-      --brand:#0a2540;
-      --accent:#00c2ff;
-      --bg:#f6f8fb;
-    }
+    :root{ --brand:#0a2540; --accent:#00c2ff; --bg:#f6f8fb; }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:#111;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg);color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:1100px;margin:auto;padding:24px}
-    .btn{
-      display:inline-block;padding:14px 18px;border-radius:12px;
-      background:var(--accent);color:#03233a;font-weight:700;text-align:center;
-      width:100%;transition:.2s ease
-    }
-    .btn:hover{opacity:.9}
-    /* Outline butonun rengi bağlama göre değişsin */
-    .btn.outline{
-      background:#e6f9ff; /* açık mavi zemin */
-      border:2px solid var(--accent);
-      color:#03233a; /* yazı koyu, görünür */
-    }
-    .btn.outline:hover{
-      background:var(--accent);
-      color:#03233a;
-    }
+
+    .btn{display:inline-block;padding:14px 18px;border-radius:12px;background:var(--accent);color:#03233a;
+         font-weight:700;text-align:center;width:100%;transition:.2s ease}
+    .btn:hover{opacity:.92}
+    .btn.outline{background:#e6f9ff;border:2px solid var(--accent);color:#03233a}
+    .btn.outline:hover{background:var(--accent);color:#03233a}
 
     header{
-      background:
-        linear-gradient(180deg, rgba(10,37,64,.85), rgba(10,37,64,.55)),
-        url('assets/airport.jpg') center/cover no-repeat;
+      background:linear-gradient(180deg, rgba(10,37,64,.85), rgba(10,37,64,.55)),
+                 url('assets/airport.jpg') center/cover no-repeat;
       color:#fff
     }
     .hero{padding:76px 0}
     .hero h1{font-size:40px;line-height:1.1;margin:0 0 12px}
     .hero p{opacity:.95;margin:0 0 20px}
-    .nav{display:flex;justify-content:space-between;align-items:center;
-      padding:18px 0;gap:12px;flex-wrap:wrap}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0;gap:12px;flex-wrap:wrap}
     .brand{display:flex;gap:10px;align-items:center}
-    .brand .logo{width:42px;height:42px;border-radius:10px;background:#fff;
-      color:var(--brand);display:grid;place-items:center;font-weight:800}
+    .brand .logo{width:42px;height:42px;border-radius:10px;background:#fff;color:var(--brand);
+      display:grid;place-items:center;font-weight:800}
+    .hero-actions{display:flex;gap:12px;max-width:420px;flex-wrap:wrap}
+
     .grid{display:grid;gap:18px}
     @media(min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
     .card{background:#fff;border-radius:16px;box-shadow:0 8px 24px rgba(3,35,58,.08);overflow:hidden}
     .card img{width:100%;height:180px;object-fit:cover}
     .card .body{padding:16px}
+
     .contact{background:#fff;border-radius:16px;box-shadow:0 8px 24px rgba(3,35,58,.08);
       padding:18px 18px 30px;word-break:break-word}
     footer{padding:36px 0;color:#3b4a5a;text-align:center}
     .muted{opacity:.75}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;
-      background:#e6f7ff;color:#08324f;font-weight:600;font-size:12px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#e6f7ff;color:#08324f;font-weight:600;font-size:12px}
+
     .row{display:flex;gap:12px;flex-wrap:wrap}
     .input{padding:14px;border:1px solid #dce3ea;border-radius:12px;width:100%}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .label{font-size:13px;color:#425466}
+    .hint{font-size:12px;color:#6b7c93}
     .form{display:grid;gap:12px}
-    @media(min-width:900px){ .form{grid-template-columns:2fr 1fr 1fr} }
+    @media(min-width:900px){
+      .form{grid-template-columns:2fr 1fr 1fr}
+      .field.span2{grid-column: span 2}
+    }
     .topbar{font-size:14px}
     .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 16px}
     .kv b{color:#08324f}
     .bank{background:#f0f7ff;border:1px dashed #b9dbff;padding:14px;border-radius:12px}
+
     @media(max-width:540px){
       .hero h1{font-size:30px}
       .kv{grid-template-columns:1fr}
@@ -75,6 +68,7 @@
   </style>
 </head>
 <body>
+  <!-- TOP -->
   <header>
     <div class="container">
       <div class="nav">
@@ -82,107 +76,130 @@
           <div class="logo">BX</div>
           <div>
             <div style="font-weight:800;letter-spacing:.2px">BXLANE International & Consulting BV</div>
-            <div class="topbar muted">Airport Transfer • Business Travel • Belgium</div>
+            <div class="topbar muted">Airport Transfers • Business Travel • Belgium</div>
           </div>
         </div>
-        <div class="row" style="max-width:420px;margin-left:auto">
-          <a class="btn outline" href="tel:+32491255954">Ara: +32 491 25 59 54</a>
-          <a class="btn" href="#book">Hemen Rezervasyon</a>
+        <div class="hero-actions" style="margin-left:auto">
+          <a class="btn outline" href="tel:+32491255954">Call: +32 491 25 59 54</a>
+          <a class="btn" href="#book">Book Now</a>
         </div>
       </div>
 
       <div class="hero">
-        <span class="pill">24/7 Havalimanı Transferi</span>
-        <h1>Zaventem & çevresinde konforlu transfer</h1>
-        <p>Profesyonel sürüş, sabit fiyat, ücretsiz bekleme süresi. Tek kişi veya aile — güvenli ve dakik ulaşım.</p>
-        <div class="row" style="justify-content:flex-start;max-width:420px;">
-          <a class="btn" href="#book">Reserve a Ride</a>
-          <a class="btn outline" style="color:#fff;border-color:#00c2ff;background:transparent;" href="#contact">Contact</a>
+        <span class="pill">24/7 Airport Service</span>
+        <h1>Comfortable transfers around Zaventem</h1>
+        <p>Professional drivers, fixed prices, free waiting time. Solo or family — safe and punctual rides.</p>
+
+        <!-- Two buttons side-by-side (stack on mobile) -->
+        <div class="hero-actions">
+          <a class="btn" href="#book" style="flex:1 1 180px">Reserve a Ride</a>
+          <a class="btn outline" href="#contact" style="flex:1 1 180px">Contact</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Araçlar -->
+  <!-- FLEET -->
   <div class="container">
     <div class="grid cols-3">
       <div class="card">
-        <img src="assets/toyota.jpg" alt="Toyota sedan">
+        <img src="assets/toyota.jpg" alt="Toyota business sedan">
         <div class="body">
           <h3>Business Sedan (Toyota)</h3>
-          <p class="muted">İş yolculukları için konforlu, ekonomik ve şık.</p>
+          <p class="muted">Comfortable and efficient — ideal for solo travelers or business clients.</p>
         </div>
       </div>
       <div class="card">
-        <img src="assets/lexus.jpg" alt="Lexus SUV">
+        <img src="assets/lexus.jpg" alt="Lexus luxury SUV">
         <div class="body">
           <h3>Luxury SUV (Lexus)</h3>
-          <p class="muted">Aile veya premium transferler için ferah ve prestijli seçenek.</p>
+          <p class="muted">Spacious premium option for families and VIP transfers.</p>
         </div>
       </div>
       <div class="card">
         <img src="assets/toyota.jpg" alt="Family transfer">
         <div class="body">
-          <h3>Grup & Aile Transferleri</h3>
-          <p class="muted">8 kişiye kadar seçenek; geniş bagaj alanı, çocuk koltuğu isteğe bağlı.</p>
+          <h3>Group & Family Transfers</h3>
+          <p class="muted">Vehicles for up to 8 passengers, large luggage space, child seats on request.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Rezervasyon -->
+  <!-- BOOKING -->
   <div class="container" id="book">
     <div class="card">
       <div class="body">
-        <h2>Hızlı Rezervasyon</h2>
-        <p class="muted">Formu doldurduktan sonra e-posta ile gönderebilir veya WhatsApp’tan yazabilirsiniz.</p>
+        <h2>Quick Booking</h2>
+        <p class="muted">After filling the form you can send it by email or message us on WhatsApp.</p>
+
         <form class="form" id="emailForm">
-          <input class="input" required name="pickup" placeholder="Alınış noktası (ör. BRU Zaventem)">
-          <input class="input" required name="date" type="date" placeholder="Tarih">
-          <input class="input" required name="time" type="time" placeholder="Saat">
-          <input class="input" required name="drop" placeholder="Varış adresi">
-          <input class="input" required name="pax" type="number" min="1" max="8" placeholder="Kişi sayısı">
+          <div class="field span2">
+            <label class="label" for="pickup">Pickup location</label>
+            <input class="input" id="pickup" required name="pickup" placeholder="e.g., BRU Zaventem">
+          </div>
+
+          <div class="field">
+            <label class="label" for="date">Date <span class="hint">(select)</span></label>
+            <input class="input" id="date" required name="date" type="date" placeholder="dd.mm.yyyy">
+          </div>
+
+          <div class="field">
+            <label class="label" for="time">Time <span class="hint">(select)</span></label>
+            <input class="input" id="time" required name="time" type="time" placeholder="--:--">
+          </div>
+
+          <div class="field span2">
+            <label class="label" for="drop">Drop-off address</label>
+            <input class="input" id="drop" required name="drop" placeholder="Address">
+          </div>
+
+          <div class="field">
+            <label class="label" for="pax">Passengers</label>
+            <input class="input" id="pax" required name="pax" type="number" min="1" max="8" placeholder="e.g., 2">
+          </div>
         </form>
 
+        <!-- One column – two equal buttons -->
         <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
-          <button class="btn" id="sendMail">E-posta ile gönder</button>
+          <button class="btn" id="sendMail">Send by Email</button>
           <a class="btn outline" id="sendWA"
-             href="https://wa.me/32491255954?text=Merhaba%2C%20transfer%20i%C3%A7in%20rezervasyon%20yapmak%20istiyorum."
-             target="_blank" rel="noopener">WhatsApp’tan yaz</a>
+             href="https://wa.me/32491255954?text=Hello%2C%20I%27d%20like%20to%20book%20an%20airport%20transfer."
+             target="_blank" rel="noopener">Message on WhatsApp</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- İletişim -->
+  <!-- CONTACT -->
   <div class="container" id="contact" style="margin-top:18px">
     <div class="contact">
-      <h2>İletişim ve Şirket Bilgileri</h2>
+      <h2>Contact & Company Details</h2>
       <div class="kv">
-        <b>Şirket</b><div>BXLANE International & Consulting BV</div>
-        <b>Merkez</b><div><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Excelciorlaan%2031%2C%201930%20Zaventem%2C%20Belgium">Excelciorlaan 31, 1930 Zaventem, BELÇİKA</a></div>
-        <b>Ofis (Valonya)</b><div>Place d’Ardelle 30, 1331 Rixensart</div>
-        <b>Telefon</b><div><a href="tel:+32491255954">+32 491 25 59 54</a> (Senikel)</div>
-        <b>E-posta</b><div><a href="mailto:bxlaneinternational@gmail.com">bxlaneinternational@gmail.com</a></div>
-        <b>KDV / TVA</b><div>BE 0740.900.450</div>
-        <b>Şirket No.</b><div>BE 0791.648.573</div>
+        <b>Company</b><div>BXLANE International & Consulting BV</div>
+        <b>Head Office</b><div><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Excelciorlaan%2031%2C%201930%20Zaventem%2C%20Belgium">Excelciorlaan 31, 1930 Zaventem, BELGIË</a></div>
+        <b>Office (Wallonia)</b><div>Place d’Ardelle 30, 1331 Rixensart</div>
+        <b>Phone</b><div><a href="tel:+32491255954">+32 491 25 59 54</a></div>
+        <b>Email</b><div><a href="mailto:bxlaneinternational@gmail.com">bxlaneinternational@gmail.com</a></div>
+        <b>VAT / TVA</b><div>BE 0740.900.450</div>
+        <b>Company No.</b><div>BE 0791.648.573</div>
       </div>
 
       <div class="bank" style="margin-top:14px">
-        <b>Banka (FINTRO)</b><br>
+        <b>Bank (FINTRO)</b><br>
         IBAN: <code>BE63 1431 2019 3108</code> • BIC: <code>GEBABEBB</code>
       </div>
 
       <div class="row" style="margin-top:14px">
         <a class="btn outline" href="https://www.google.com/maps/search/?api=1&query=Excelciorlaan%2031%2C%201930%20Zaventem%2C%20Belgium"
-           target="_blank" rel="noopener">Haritalarda aç</a>
+           target="_blank" rel="noopener">Open in Maps</a>
       </div>
     </div>
   </div>
 
   <footer>
     <div class="container">
-      <div class="muted">© <span id="year"></span> BXLANE International & Consulting BV. Tüm hakları saklıdır.</div>
+      <div class="muted">© <span id="year"></span> BXLANE International & Consulting BV. All rights reserved.</div>
     </div>
   </footer>
 
@@ -191,21 +208,20 @@
     document.getElementById('sendMail').addEventListener('click',(e)=>{
       e.preventDefault();
       const fd=new FormData(form);
-      const subject=`[Rezervasyon] ${fd.get('pickup')||''} → ${fd.get('drop')||''} (${fd.get('date')||''} ${fd.get('time')||''})`;
-      const body=`Merhaba BXLANE,
+      const subject=`[Booking] ${fd.get('pickup')||''} → ${fd.get('drop')||''} (${fd.get('date')||''} ${fd.get('time')||''})`;
+      const body=`Hello BXLANE,
 
-Alınış: ${fd.get('pickup')||''}
-Varış: ${fd.get('drop')||''}
-Tarih: ${fd.get('date')||''}
-Saat: ${fd.get('time')||''}
-Kişi: ${fd.get('pax')||''}
+Pickup: ${fd.get('pickup')||''}
+Drop-off: ${fd.get('drop')||''}
+Date: ${fd.get('date')||''}
+Time: ${fd.get('time')||''}
+Passengers: ${fd.get('pax')||''}
 
-Lütfen fiyat ve uygunluğu paylaşır mısınız?
-Teşekkürler.`;
+Please confirm availability and price.
+Thank you.`;
       window.location.href=`mailto:bxlaneinternational@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
 </body>
 </html>
-
