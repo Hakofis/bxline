@@ -23,17 +23,10 @@
       width:100%;transition:.2s ease
     }
     .btn:hover{opacity:.9}
-    /* Outline butonun rengi bağlama göre değişsin */
     .btn.outline{
-      background:#e6f9ff; /* açık mavi zemin */
-      border:2px solid var(--accent);
-      color:#03233a; /* yazı koyu, görünür */
+      background:#e6f9ff;border:2px solid var(--accent);color:#03233a;
     }
-    .btn.outline:hover{
-      background:var(--accent);
-      color:#03233a;
-    }
-
+    .btn.outline:hover{background:var(--accent);color:#03233a}
     header{
       background:
         linear-gradient(180deg, rgba(10,37,64,.85), rgba(10,37,64,.55)),
@@ -48,6 +41,7 @@
     .brand{display:flex;gap:10px;align-items:center}
     .brand .logo{width:42px;height:42px;border-radius:10px;background:#fff;
       color:var(--brand);display:grid;place-items:center;font-weight:800}
+    .hero-actions{display:flex;gap:12px;max-width:420px;flex-wrap:wrap}
     .grid{display:grid;gap:18px}
     @media(min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
     .card{background:#fff;border-radius:16px;box-shadow:0 8px 24px rgba(3,35,58,.08);overflow:hidden}
@@ -61,8 +55,14 @@
       background:#e6f7ff;color:#08324f;font-weight:600;font-size:12px}
     .row{display:flex;gap:12px;flex-wrap:wrap}
     .input{padding:14px;border:1px solid #dce3ea;border-radius:12px;width:100%}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .label{font-size:13px;color:#425466}
+    .hint{font-size:12px;color:#6b7c93}
     .form{display:grid;gap:12px}
-    @media(min-width:900px){ .form{grid-template-columns:2fr 1fr 1fr} }
+    @media(min-width:900px){
+      .form{grid-template-columns:2fr 1fr 1fr}
+      .field.span2{grid-column: span 2}
+    }
     .topbar{font-size:14px}
     .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 16px}
     .kv b{color:#08324f}
@@ -75,6 +75,7 @@
   </style>
 </head>
 <body>
+  <!-- ÜST -->
   <header>
     <div class="container">
       <div class="nav">
@@ -85,7 +86,7 @@
             <div class="topbar muted">Airport Transfer • Business Travel • Belgium</div>
           </div>
         </div>
-        <div class="row" style="max-width:420px;margin-left:auto">
+        <div class="hero-actions" style="margin-left:auto">
           <a class="btn outline" href="tel:+32491255954">Ara: +32 491 25 59 54</a>
           <a class="btn" href="#book">Hemen Rezervasyon</a>
         </div>
@@ -95,15 +96,17 @@
         <span class="pill">24/7 Havalimanı Transferi</span>
         <h1>Zaventem & çevresinde konforlu transfer</h1>
         <p>Profesyonel sürüş, sabit fiyat, ücretsiz bekleme süresi. Tek kişi veya aile — güvenli ve dakik ulaşım.</p>
-        <div class="row" style="justify-content:flex-start;max-width:420px;">
-          <a class="btn" href="#book">Reserve a Ride</a>
-          <a class="btn outline" style="color:#fff;border-color:#00c2ff;background:transparent;" href="#contact">Contact</a>
+
+        <!-- İSTEK: Yan yana iki buton (desktop), mobilde alt alta -->
+        <div class="hero-actions">
+          <a class="btn" href="#book" style="flex:1 1 180px">Reserve a Ride</a>
+          <a class="btn outline" href="#contact" style="flex:1 1 180px">Contact</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Araçlar -->
+  <!-- ARAÇLAR -->
   <div class="container">
     <div class="grid cols-3">
       <div class="card">
@@ -130,20 +133,41 @@
     </div>
   </div>
 
-  <!-- Rezervasyon -->
+  <!-- REZERVASYON -->
   <div class="container" id="book">
     <div class="card">
       <div class="body">
         <h2>Hızlı Rezervasyon</h2>
         <p class="muted">Formu doldurduktan sonra e-posta ile gönderebilir veya WhatsApp’tan yazabilirsiniz.</p>
+
         <form class="form" id="emailForm">
-          <input class="input" required name="pickup" placeholder="Alınış noktası (ör. BRU Zaventem)">
-          <input class="input" required name="date" type="date" placeholder="Tarih">
-          <input class="input" required name="time" type="time" placeholder="Saat">
-          <input class="input" required name="drop" placeholder="Varış adresi">
-          <input class="input" required name="pax" type="number" min="1" max="8" placeholder="Kişi sayısı">
+          <div class="field span2">
+            <label class="label" for="pickup">Alınış noktası</label>
+            <input class="input" id="pickup" required name="pickup" placeholder="Örn. BRU Zaventem">
+          </div>
+
+          <div class="field">
+            <label class="label" for="date">Tarih <span class="hint">(seçiniz)</span></label>
+            <input class="input" id="date" required name="date" type="date" placeholder="gg.aa.yyyy">
+          </div>
+
+          <div class="field">
+            <label class="label" for="time">Saat <span class="hint">(seçiniz)</span></label>
+            <input class="input" id="time" required name="time" type="time" placeholder="--:--">
+          </div>
+
+          <div class="field span2">
+            <label class="label" for="drop">Varış adresi</label>
+            <input class="input" id="drop" required name="drop" placeholder="Adres">
+          </div>
+
+          <div class="field">
+            <label class="label" for="pax">Kişi sayısı</label>
+            <input class="input" id="pax" required name="pax" type="number" min="1" max="8" placeholder="Örn. 2">
+          </div>
         </form>
 
+        <!-- Tek sütun – iki eş buton -->
         <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
           <button class="btn" id="sendMail">E-posta ile gönder</button>
           <a class="btn outline" id="sendWA"
@@ -154,7 +178,7 @@
     </div>
   </div>
 
-  <!-- İletişim -->
+  <!-- İLETİŞİM -->
   <div class="container" id="contact" style="margin-top:18px">
     <div class="contact">
       <h2>İletişim ve Şirket Bilgileri</h2>
@@ -162,7 +186,7 @@
         <b>Şirket</b><div>BXLANE International & Consulting BV</div>
         <b>Merkez</b><div><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Excelciorlaan%2031%2C%201930%20Zaventem%2C%20Belgium">Excelciorlaan 31, 1930 Zaventem, BELÇİKA</a></div>
         <b>Ofis (Valonya)</b><div>Place d’Ardelle 30, 1331 Rixensart</div>
-        <b>Telefon</b><div><a href="tel:+32491255954">+32 491 25 59 54</a> (Senikel)</div>
+        <b>Telefon</b><div><a href="tel:+32491255954">+32 491 25 59 54</a></div>
         <b>E-posta</b><div><a href="mailto:bxlaneinternational@gmail.com">bxlaneinternational@gmail.com</a></div>
         <b>KDV / TVA</b><div>BE 0740.900.450</div>
         <b>Şirket No.</b><div>BE 0791.648.573</div>
@@ -208,4 +232,3 @@ Teşekkürler.`;
   </script>
 </body>
 </html>
-
