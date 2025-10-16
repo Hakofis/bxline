@@ -5,143 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BXLINE – Airport & City Transfers</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f3f8fd;
-      margin: 0;
-      padding: 0;
-      color: #222;
+    :root{
+      --brand:#00b7ff;
+      --brand-dark:#0095cc;
+      --ink:#0a2540;
+      --bg:#f3f8fd;
+      --card:#fff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:#222}
+
+    /* HEADER */
+    header{
+      position:relative;
+      background:url('assets/airport.jpg') center/cover no-repeat;
+      height:320px;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center
+    }
+    header::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    header .inner{position:relative;z-index:1;padding:0 16px}
+    header h1{margin:0 0 8px;font-size:2.3rem;font-weight:800;letter-spacing:.3px}
+    header p{margin:0;font-size:1.05rem;opacity:.95}
+
+    /* VEHICLES */
+    .vehicles{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:32px 16px}
+    .vehicle{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.08);overflow:hidden;width:min(340px,92vw);transition:transform .25s}
+    .vehicle:hover{transform:translateY(-3px)}
+    .vehicle .img-wrap{height:220px}
+    .vehicle img{width:100%;height:100%;object-fit:cover;display:block}
+    .vehicle h3{margin:10px 0 14px;text-align:center;color:#333}
+
+    /* BOOKING + MAP LAYOUT */
+    .booking-wrap{max-width:1120px;margin:0 auto 64px;padding:0 16px}
+    .booking-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    @media (max-width:900px){.booking-grid{grid-template-columns:1fr}}
+    .panel{
+      background:var(--card);border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08);
+      padding:22px
     }
 
-    /* --- HEADER --- */
-    header {
-      position: relative;
-      background: url('assets/airport.jpg') center/cover no-repeat;
-      height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      text-align: center;
-    }
-    header::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-    }
-    header h1 {
-      position: relative;
-      font-size: 2.3em;
-      font-weight: 700;
-      z-index: 2;
-      margin: 0;
-    }
-    header p {
-      position: relative;
-      font-size: 1.2em;
-      z-index: 2;
-      margin-top: 10px;
-    }
+    /* MAP */
+    #map{width:100%;height:520px;border-radius:10px}
 
-    /* --- VEHICLES --- */
-    .vehicles {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin: 40px 20px;
+    /* FORM */
+    h2{margin:6px 0 14px;text-align:center;color:var(--brand-dark)}
+    .hint{margin:-6px 0 12px;text-align:center;color:#576e85;font-size:.95rem}
+    label{display:block;margin-top:12px;font-weight:600;color:#31465a}
+    input{width:100%;padding:12px 12px;border:1px solid #cfd8e3;border-radius:8px;font-size:15px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row > div{flex:1 1 230px}
+    button{
+      width:100%;margin-top:12px;padding:14px 16px;border:0;border-radius:8px;
+      background:var(--brand);color:#fff;font-weight:700;cursor:pointer
     }
-    .vehicle {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      max-width: 320px;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-    .vehicle:hover { transform: scale(1.03); }
-    .vehicle img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .vehicle h3 {
-      margin: 10px 0;
-      color: #333;
-    }
+    button:hover{background:var(--brand-dark)}
+    .secondary{background:#e6f6ff;color:#083b55}
+    .secondary:hover{background:#d8f0ff}
+    #result{display:none;margin-top:10px;background:#eef7ff;border-radius:8px;padding:12px;line-height:1.6}
 
-    /* --- FORM --- */
-    .form-container {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      max-width: 800px;
-      margin: 0 auto 60px;
-      padding: 30px;
-    }
-    h2 {
-      text-align: center;
-      color: #008cff;
-      margin-bottom: 20px;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .row > div {
-      flex: 1;
-      min-width: 250px;
-    }
-    button {
-      width: 100%;
-      background: #00b7ff;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 14px;
-      font-size: 16px;
-      margin-top: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #0095cc;
-    }
-    .secondary {
-      background: #e3f5ff;
-      color: #000;
-    }
-    #result {
-      background: #e8f6ff;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 15px;
-      display: none;
-    }
-    .footer {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 25px;
-    }
+    .footer{max-width:1120px;margin:0 auto 28px;text-align:center;color:#7a8da6;font-size:12px}
   </style>
 </head>
-
 <body>
   <!-- HEADER -->
   <header>
-    <div>
+    <div class="inner">
       <h1>BXLINE Airport & City Transfers</h1>
       <p>Reliable, comfortable and on-time rides across Belgium</p>
     </div>
@@ -149,56 +76,69 @@
 
   <!-- VEHICLES -->
   <section class="vehicles">
-    <div class="vehicle">
-      <img src="assets/lexus.jpg" alt="Lexus">
+    <article class="vehicle">
+      <div class="img-wrap"><img src="assets/lexus.jpg" alt="Lexus"></div>
       <h3>Lexus</h3>
-    </div>
-    <div class="vehicle">
-      <img src="assets/tesla-model-y.jpg" alt="Tesla Model Y">
+    </article>
+    <article class="vehicle">
+      <div class="img-wrap"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y"></div>
       <h3>Tesla Model Y</h3>
-    </div>
-    <div class="vehicle">
-      <img src="assets/renault-arkana.jpg" alt="Renault Arkana">
+    </article>
+    <article class="vehicle">
+      <div class="img-wrap"><img src="assets/renault-arkana.jpg" alt="Renault Arkana"></div>
       <h3>Renault Arkana</h3>
-    </div>
+    </article>
   </section>
 
-  <!-- FORM -->
-  <section class="form-container">
-    <h2>Quick Booking</h2>
-    <p style="text-align:center;">Fill in your trip details to estimate distance and price, then contact us.</p>
+  <!-- BOOKING + MAP -->
+  <section class="booking-wrap">
+    <div class="booking-grid">
 
-    <div class="row">
-      <div>
-        <label>Pickup Location</label>
-        <input id="pickup" type="text" placeholder="e.g. Brussels Airport" />
-      </div>
-      <div>
-        <label>Drop-off Location</label>
-        <input id="dropoff" type="text" placeholder="e.g. Antwerp Central Station" />
+      <!-- MAP PANEL -->
+      <aside class="panel">
+        <h2>Route Map</h2>
+        <p class="hint">Your route will appear here after calculation.</p>
+        <div id="map"></div>
+      </aside>
+
+      <!-- FORM PANEL -->
+      <div class="panel">
+        <h2>Quick Booking</h2>
+        <p class="hint">Fill in details to estimate distance & price, then contact us.</p>
+
+        <div class="row">
+          <div>
+            <label>Pickup Location</label>
+            <input id="pickup" type="text" placeholder="e.g. Mortsel, Belgium" autocomplete="off">
+          </div>
+          <div>
+            <label>Drop-off Location</label>
+            <input id="dropoff" type="text" placeholder="e.g. Brussels Airport (BRU)" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Date</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Time</label>
+            <input id="time" type="time">
+          </div>
+          <div>
+            <label>Passengers</label>
+            <input id="passengers" type="number" min="1" placeholder="e.g. 2">
+          </div>
+        </div>
+
+        <button id="calcBtn">Calculate Distance</button>
+        <div id="result"></div>
+
+        <button id="emailBtn">Send by Email</button>
+        <button id="waBtn" class="secondary">Message on WhatsApp</button>
       </div>
     </div>
-
-    <div class="row">
-      <div>
-        <label>Date</label>
-        <input id="date" type="date" />
-      </div>
-      <div>
-        <label>Time</label>
-        <input id="time" type="time" />
-      </div>
-      <div>
-        <label>Passengers</label>
-        <input id="passengers" type="number" min="1" placeholder="e.g. 2" />
-      </div>
-    </div>
-
-    <button onclick="calculateDistance()">Calculate Distance</button>
-    <div id="result"></div>
-
-    <button id="emailBtn">Send by Email</button>
-    <button id="waBtn" class="secondary">Message on WhatsApp</button>
   </section>
 
   <div class="footer">
@@ -206,68 +146,113 @@
   </div>
 
   <script>
-    const ratePerKm = 4.5;
-    let pickupAutocomplete, dropoffAutocomplete;
+    // === CONFIG ===
+    const ratePerKm = 4.5; // €/km
+    let map, directionsService, directionsRenderer, pickupAC, dropoffAC;
 
-    function initAutocomplete() {
-      const options = { componentRestrictions: { country: "be" } }; // only Belgium
-      pickupAutocomplete = new google.maps.places.Autocomplete(document.getElementById("pickup"), options);
-      dropoffAutocomplete = new google.maps.places.Autocomplete(document.getElementById("dropoff"), options);
+    function initMapAndAutocomplete(){
+      // Map
+      map = new google.maps.Map(document.getElementById('map'), {
+        center:{lat:50.8503, lng:4.3517}, // Brussels
+        zoom:9,
+        mapTypeControl:false,
+        streetViewControl:false
+      });
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        suppressMarkers:false,
+        polylineOptions:{strokeColor:'#e11900', strokeWeight:5, strokeOpacity:0.85}
+      });
+      directionsRenderer.setMap(map);
+
+      // Places Autocomplete (Belgium)
+      const opts = { componentRestrictions:{country:'be'} };
+      pickupAC  = new google.maps.places.Autocomplete(document.getElementById('pickup'), opts);
+      dropoffAC = new google.maps.places.Autocomplete(document.getElementById('dropoff'), opts);
+
+      document.getElementById('calcBtn').addEventListener('click', calculateDistanceAndDraw);
+      document.getElementById('waBtn').addEventListener('click', sendWhatsApp);
+      document.getElementById('emailBtn').addEventListener('click', sendEmail);
     }
 
-    function calculateDistance() {
-      const origin = document.getElementById("pickup").value;
-      const destination = document.getElementById("dropoff").value;
-      if (!origin || !destination) {
-        alert("Please enter both locations.");
-        return;
-      }
+    function calculateDistanceAndDraw(){
+      const origin = document.getElementById('pickup').value.trim();
+      const destination = document.getElementById('dropoff').value.trim();
+      if(!origin || !destination){ alert('Please enter both locations.'); return; }
 
+      // 1) Draw route (Directions)
+      directionsService.route({
+        origin, destination, travelMode: google.maps.TravelMode.DRIVING
+      }, (res, status) => {
+        if(status === 'OK' && res.routes.length){
+          directionsRenderer.setDirections(res);
+        }
+      });
+
+      // 2) Calculate price (Distance Matrix for precise driving distance)
       const service = new google.maps.DistanceMatrixService();
       service.getDistanceMatrix({
-        origins: [origin],
-        destinations: [destination],
-        travelMode: "DRIVING",
-        unitSystem: google.maps.UnitSystem.METRIC,
+        origins:[origin], destinations:[destination],
+        travelMode:'DRIVING', unitSystem:google.maps.UnitSystem.METRIC
       }, (response, status) => {
-        if (status !== "OK") {
-          alert("Error: " + status);
+        const resultDiv = document.getElementById('result');
+        if(status !== 'OK'){
+          resultDiv.style.display='block';
+          resultDiv.innerHTML = `<span style="color:#b00020">Error: ${status}</span>`;
           return;
         }
-        const data = response.rows[0].elements[0];
-        const distanceKm = data.distance.value / 1000;
-        const durationText = data.duration.text;
-        const price = (distanceKm * ratePerKm).toFixed(2);
-
-        const result = document.getElementById("result");
-        result.style.display = "block";
-        result.innerHTML = `
-          <b>Distance:</b> ${distanceKm.toFixed(1)} km<br>
-          <b>Duration:</b> ${durationText}<br>
+        const el = response.rows[0].elements[0];
+        if(el.status !== 'OK'){
+          resultDiv.style.display='block';
+          resultDiv.innerHTML = `<span style="color:#b00020">Route status: ${el.status}</span>`;
+          return;
+        }
+        const km = (el.distance.value/1000);
+        const price = (km*ratePerKm).toFixed(2);
+        resultDiv.style.display='block';
+        resultDiv.innerHTML = `
+          <b>Distance:</b> ${km.toFixed(1)} km<br>
+          <b>Duration:</b> ${el.duration.text}<br>
           <b>Estimated Price:</b> €${price}
         `;
+        // keep for message composing
+        resultDiv.dataset.km = km.toFixed(1);
+        resultDiv.dataset.duration = el.duration.text;
+        resultDiv.dataset.price = price;
       });
     }
 
-    // WhatsApp
-    document.getElementById("waBtn").addEventListener("click", () => {
-      const text = encodeURIComponent(
-        `Transfer Request:\nPickup: ${pickup.value}\nDrop-off: ${dropoff.value}\nDate: ${date.value} ${time.value}\nPassengers: ${passengers.value}`
-      );
-      window.open(`https://wa.me/32491255954?text=${text}`, "_blank");
-    });
+    function buildMessage(){
+      const r = document.getElementById('result').dataset;
+      const pickup = document.getElementById('pickup').value;
+      const drop = document.getElementById('dropoff').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const pax  = document.getElementById('passengers').value;
+      return `Transfer Request:
+Pickup: ${pickup}
+Drop-off: ${drop}
+Date: ${date} ${time}
+Passengers: ${pax}
+Distance: ${r.km || '-'} km
+Duration: ${r.duration || '-'}
+Estimated Price: €${r.price || '-'}`;
+    }
 
-    // Email
-    document.getElementById("emailBtn").addEventListener("click", () => {
-      const body = encodeURIComponent(
-        `Pickup: ${pickup.value}\nDrop-off: ${dropoff.value}\nDate: ${date.value} ${time.value}\nPassengers: ${passengers.value}`
-      );
-      window.location.href = `mailto:info@bxline.com?subject=Transfer Request&body=${body}`;
-    });
+    function sendWhatsApp(){
+      const text = encodeURIComponent(buildMessage());
+      window.open(`https://wa.me/32491255954?text=${text}`,'_blank');
+    }
+    function sendEmail(){
+      const subject = encodeURIComponent('New Transfer Request');
+      const body = encodeURIComponent(buildMessage());
+      window.location.href = `mailto:info@bxline.com?subject=${subject}&body=${body}`;
+    }
   </script>
 
+  <!-- IMPORTANT: API key burada -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initAutocomplete">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initMapAndAutocomplete">
   </script>
 </body>
 </html>
