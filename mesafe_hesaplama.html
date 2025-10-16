@@ -1,47 +1,128 @@
-<script>
-  const ratePerKm = 4.5;
-
-  let pickupAutocomplete, dropoffAutocomplete;
-  function initAutocomplete() {
-    pickupAutocomplete = new google.maps.places.Autocomplete(document.getElementById("pickup"));
-    dropoffAutocomplete = new google.maps.places.Autocomplete(document.getElementById("dropoff"));
-  }
-
-  function calculateDistance() {
-    const origin = document.getElementById("pickup").value.trim();
-    const destination = document.getElementById("dropoff").value.trim();
-    if (!origin || !destination) {
-      alert("Please enter both pickup and drop-off locations.");
-      return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BXLINE Distance & Price Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f7fc;
+      margin: 0;
+      padding: 0;
     }
-    const service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix({
-      origins: [origin],
-      destinations: [destination],
-      travelMode: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.METRIC
-    }, (response, status) => {
-      if (status !== "OK") {
-        document.getElementById("result").innerHTML =
-          `<span style="color:#b00020">Distance Matrix error: <b>${status}</b></span>`;
-        console.log("DistanceMatrix full response:", response);
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    h1 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 15px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #00bfff;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0099cc;
+    }
+    #result {
+      margin-top: 20px;
+      background: #eaf6ff;
+      border-radius: 8px;
+      padding: 15px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>BXLINE Distance & Price Calculator</h1>
+
+    <label for="pickup">Pickup location:</label>
+    <input id="pickup" type="text" placeholder="e.g. Brussels Airport">
+
+    <label for="dropoff">Drop-off location:</label>
+    <input id="dropoff" type="text" placeholder="e.g. Antwerp Central Station">
+
+    <button onclick="calculateDistance()">Calculate Distance</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const ratePerKm = 4.5;
+    let pickupAutocomplete, dropoffAutocomplete;
+
+    function initAutocomplete() {
+      pickupAutocomplete = new google.maps.places.Autocomplete(document.getElementById("pickup"));
+      dropoffAutocomplete = new google.maps.places.Autocomplete(document.getElementById("dropoff"));
+    }
+
+    function calculateDistance() {
+      const origin = document.getElementById("pickup").value.trim();
+      const destination = document.getElementById("dropoff").value.trim();
+      if (!origin || !destination) {
+        alert("Please enter both pickup and drop-off locations.");
         return;
       }
-      const el = response.rows?.[0]?.elements?.[0];
-      if (!el || el.status !== "OK") {
-        document.getElementById("result").innerHTML =
-          `<span style="color:#b00020">Route status: <b>${el?.status || "UNKNOWN"}</b></span>`;
-        return;
-      }
-      const km = el.distance.value / 1000;
-      const price = (km * ratePerKm).toFixed(2);
-      document.getElementById("result").innerHTML =
-        `📍 Distance: <b>${el.distance.text}</b><br>
-         ⏱️ Duration: <b>${el.duration.text}</b><br>
-         💶 Estimated price: <b>€${price}</b>`;
-    });
-  }
-</script>
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE&libraries=places&callback=initAutocomplete">
-</script>
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix({
+        origins: [origin],
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+      }, (response, status) => {
+        if (status !== "OK") {
+          document.getElementById("result").innerHTML = `<span style='color:red'>Error: ${status}</span>`;
+          return;
+        }
+
+        const element = response.rows[0].elements[0];
+        if (element.status !== "OK") {
+          document.getElementById("result").innerHTML = `<span style='color:red'>No route found (${element.status})</span>`;
+          return;
+        }
+
+        const distanceKm = element.distance.value / 1000;
+        const durationText = element.duration.text;
+        const price = (distanceKm * ratePerKm).toFixed(2);
+
+        document.getElementById("result").innerHTML = `
+          <strong>Distance:</strong> ${element.distance.text}<br>
+          <strong>Duration:</strong> ${durationText}<br>
+          <strong>Estimated Price:</strong> €${price}
+        `;
+      });
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initAutocomplete">
+  </script>
+</body>
+</html>
