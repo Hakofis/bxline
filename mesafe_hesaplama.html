@@ -1,0 +1,47 @@
+<script>
+  const ratePerKm = 4.5;
+
+  let pickupAutocomplete, dropoffAutocomplete;
+  function initAutocomplete() {
+    pickupAutocomplete = new google.maps.places.Autocomplete(document.getElementById("pickup"));
+    dropoffAutocomplete = new google.maps.places.Autocomplete(document.getElementById("dropoff"));
+  }
+
+  function calculateDistance() {
+    const origin = document.getElementById("pickup").value.trim();
+    const destination = document.getElementById("dropoff").value.trim();
+    if (!origin || !destination) {
+      alert("Please enter both pickup and drop-off locations.");
+      return;
+    }
+    const service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix({
+      origins: [origin],
+      destinations: [destination],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC
+    }, (response, status) => {
+      if (status !== "OK") {
+        document.getElementById("result").innerHTML =
+          `<span style="color:#b00020">Distance Matrix error: <b>${status}</b></span>`;
+        console.log("DistanceMatrix full response:", response);
+        return;
+      }
+      const el = response.rows?.[0]?.elements?.[0];
+      if (!el || el.status !== "OK") {
+        document.getElementById("result").innerHTML =
+          `<span style="color:#b00020">Route status: <b>${el?.status || "UNKNOWN"}</b></span>`;
+        return;
+      }
+      const km = el.distance.value / 1000;
+      const price = (km * ratePerKm).toFixed(2);
+      document.getElementById("result").innerHTML =
+        `📍 Distance: <b>${el.distance.text}</b><br>
+         ⏱️ Duration: <b>${el.duration.text}</b><br>
+         💶 Estimated price: <b>€${price}</b>`;
+    });
+  }
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE&libraries=places&callback=initAutocomplete">
+</script>
