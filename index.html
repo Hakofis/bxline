@@ -1,227 +1,254 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BXLANE International & Consulting BV | Airport Transfers</title>
-  <meta name="description" content="Reliable airport transfers in and around Zaventem/Brussels. Fixed prices, professional drivers.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BXLINE – Quick Booking</title>
   <style>
-    :root{ --brand:#0a2540; --accent:#00c2ff; --bg:#f6f8fb; }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:#111;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:1100px;margin:auto;padding:24px}
-
-    .btn{display:inline-block;padding:14px 18px;border-radius:12px;background:var(--accent);color:#03233a;
-         font-weight:700;text-align:center;width:100%;transition:.2s ease}
-    .btn:hover{opacity:.92}
-    .btn.outline{background:#e6f9ff;border:2px solid var(--accent);color:#03233a}
-    .btn.outline:hover{background:var(--accent);color:#03233a}
-
-    header{
-      background:linear-gradient(180deg, rgba(10,37,64,.85), rgba(10,37,64,.55)),
-                 url('assets/airport.jpg') center/cover no-repeat;
-      color:#fff
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f8fd;
+      margin: 0;
+      padding: 0;
+      color: #222;
     }
-    .hero{padding:76px 0}
-    .hero h1{font-size:40px;line-height:1.1;margin:0 0 12px}
-    .hero p{opacity:.95;margin:0 0 20px}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0;gap:12px;flex-wrap:wrap}
-    .brand{display:flex;gap:10px;align-items:center}
-    .brand .logo{width:42px;height:42px;border-radius:10px;background:#fff;color:var(--brand);
-      display:grid;place-items:center;font-weight:800}
-    .hero-actions{display:flex;gap:12px;max-width:420px;flex-wrap:wrap}
-
-    .grid{display:grid;gap:18px}
-    @media(min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
-    .card{background:#fff;border-radius:16px;box-shadow:0 8px 24px rgba(3,35,58,.08);overflow:hidden}
-    .card img{width:100%;height:180px;object-fit:cover}
-    .card .body{padding:16px}
-
-    .contact{background:#fff;border-radius:16px;box-shadow:0 8px 24px rgba(3,35,58,.08);
-      padding:18px 18px 30px;word-break:break-word}
-    footer{padding:36px 0;color:#3b4a5a;text-align:center}
-    .muted{opacity:.75}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#e6f7ff;color:#08324f;font-weight:600;font-size:12px}
-
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    .input{padding:14px;border:1px solid #dce3ea;border-radius:12px;width:100%}
-    .field{display:flex;flex-direction:column;gap:6px}
-    .label{font-size:13px;color:#425466}
-    .hint{font-size:12px;color:#6b7c93}
-    .form{display:grid;gap:12px}
-    @media(min-width:900px){
-      .form{grid-template-columns:2fr 1fr 1fr}
-      .field.span2{grid-column: span 2}
+    header {
+      text-align: center;
+      padding: 30px 10px 10px;
     }
-    .topbar{font-size:14px}
-    .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 16px}
-    .kv b{color:#08324f}
-    .bank{background:#f0f7ff;border:1px dashed #b9dbff;padding:14px;border-radius:12px}
-
-    @media(max-width:540px){
-      .hero h1{font-size:30px}
-      .kv{grid-template-columns:1fr}
-      .btn{width:100%}
+    header h1 {
+      color: #008cff;
+      margin-bottom: 5px;
+    }
+    .vehicles {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .vehicle {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-width: 320px;
+      text-align: center;
+    }
+    .vehicle img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .vehicle h3 {
+      margin: 10px 0;
+      color: #333;
+    }
+    .form-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      max-width: 800px;
+      margin: 0 auto 60px;
+      padding: 30px;
+    }
+    h2 {
+      text-align: center;
+      color: #008cff;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .row > div {
+      flex: 1;
+      min-width: 250px;
+    }
+    button {
+      width: 100%;
+      background: #00b7ff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 14px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0095cc;
+    }
+    #result {
+      background: #e8f6ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      display: none;
+    }
+    .secondary {
+      background: #e3f5ff;
+      color: #000;
+    }
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 25px;
     }
   </style>
 </head>
 <body>
-  <!-- TOP -->
   <header>
-    <div class="container">
-      <div class="nav">
-        <div class="brand">
-          <div class="logo">BX</div>
-          <div>
-            <div style="font-weight:800;letter-spacing:.2px">BXLANE International & Consulting BV</div>
-            <div class="topbar muted">Airport Transfers • Business Travel • Belgium</div>
-          </div>
-        </div>
-        <div class="hero-actions" style="margin-left:auto">
-          <a class="btn outline" href="tel:+32491255954">Call: +32 491 25 59 54</a>
-          <a class="btn" href="#book">Book Now</a>
-        </div>
-      </div>
-
-      <div class="hero">
-        <span class="pill">24/7 Airport Service</span>
-        <h1>Comfortable transfers around Zaventem</h1>
-        <p>Professional drivers, fixed prices, free waiting time. Solo or family — safe and punctual rides.</p>
-
-        <!-- Two buttons side-by-side (stack on mobile) -->
-        <div class="hero-actions">
-          <a class="btn" href="#book" style="flex:1 1 180px">Reserve a Ride</a>
-          <a class="btn outline" href="#contact" style="flex:1 1 180px">Contact</a>
-        </div>
-      </div>
-    </div>
+    <h1>BXLINE International Transfers</h1>
+    <p>Reliable airport & city rides across Belgium</p>
   </header>
 
-  <!-- FLEET -->
-  <div class="container">
-    <div class="grid cols-3">
-      <div class="card">
-        <img src="assets/toyota.jpg" alt="Toyota business sedan">
-        <div class="body">
-          <h3>Business Sedan (Toyota)</h3>
-          <p class="muted">Comfortable and efficient — ideal for solo travelers or business clients.</p>
-        </div>
+  <!-- Araçlar -->
+  <section class="vehicles">
+    <div class="vehicle">
+      <img src="assets/lexus.jpg" alt="Lexus" />
+      <h3>Lexus</h3>
+    </div>
+    <div class="vehicle">
+      <img src="assets/tesla-model-y.jpg" alt="Tesla Model Y" />
+      <h3>Tesla Model Y</h3>
+    </div>
+    <div class="vehicle">
+      <img src="assets/renault-arkana.jpg" alt="Renault Arkana" />
+      <h3>Renault Arkana</h3>
+    </div>
+  </section>
+
+  <!-- Rezervasyon -->
+  <section class="form-container">
+    <h2>Quick Booking</h2>
+    <p style="text-align:center;">Fill in your trip details to estimate distance and price, then contact us.</p>
+
+    <div class="row">
+      <div>
+        <label>Pickup Location</label>
+        <input id="pickup" type="text" placeholder="e.g. Brussels Airport">
       </div>
-      <div class="card">
-        <img src="assets/lexus.jpg" alt="Lexus luxury SUV">
-        <div class="body">
-          <h3>Luxury SUV (Lexus)</h3>
-          <p class="muted">Spacious premium option for families and VIP transfers.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="assets/toyota.jpg" alt="Family transfer">
-        <div class="body">
-          <h3>Group & Family Transfers</h3>
-          <p class="muted">Vehicles for up to 8 passengers, large luggage space, child seats on request.</p>
-        </div>
+      <div>
+        <label>Drop-off Location</label>
+        <input id="dropoff" type="text" placeholder="e.g. Antwerp Central Station">
       </div>
     </div>
+
+    <div class="row">
+      <div>
+        <label>Date</label>
+        <input id="date" type="date">
+      </div>
+      <div>
+        <label>Time</label>
+        <input id="time" type="time">
+      </div>
+      <div>
+        <label>Passengers</label>
+        <input id="passengers" type="number" min="1" placeholder="e.g. 2">
+      </div>
+    </div>
+
+    <button onclick="calculateDistance()">Calculate Distance</button>
+
+    <div id="result"></div>
+
+    <button id="emailBtn">Send by Email</button>
+    <button id="waBtn" class="secondary">Message on WhatsApp</button>
+  </section>
+
+  <div class="footer">
+    Renault Arkana photo © Alexander-93, CC BY-SA 4.0 (via Wikimedia Commons)
   </div>
-
-  <!-- BOOKING -->
-  <div class="container" id="book">
-    <div class="card">
-      <div class="body">
-        <h2>Quick Booking</h2>
-        <p class="muted">After filling the form you can send it by email or message us on WhatsApp.</p>
-
-        <form class="form" id="emailForm">
-          <div class="field span2">
-            <label class="label" for="pickup">Pickup location</label>
-            <input class="input" id="pickup" required name="pickup" placeholder="e.g., BRU Zaventem">
-          </div>
-
-          <div class="field">
-            <label class="label" for="date">Date <span class="hint">(select)</span></label>
-            <input class="input" id="date" required name="date" type="date" placeholder="dd.mm.yyyy">
-          </div>
-
-          <div class="field">
-            <label class="label" for="time">Time <span class="hint">(select)</span></label>
-            <input class="input" id="time" required name="time" type="time" placeholder="--:--">
-          </div>
-
-          <div class="field span2">
-            <label class="label" for="drop">Drop-off address</label>
-            <input class="input" id="drop" required name="drop" placeholder="Address">
-          </div>
-
-          <div class="field">
-            <label class="label" for="pax">Passengers</label>
-            <input class="input" id="pax" required name="pax" type="number" min="1" max="8" placeholder="e.g., 2">
-          </div>
-        </form>
-
-        <!-- One column – two equal buttons -->
-        <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
-          <button class="btn" id="sendMail">Send by Email</button>
-          <a class="btn outline" id="sendWA"
-             href="https://wa.me/32491255954?text=Hello%2C%20I%27d%20like%20to%20book%20an%20airport%20transfer."
-             target="_blank" rel="noopener">Message on WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTACT -->
-  <div class="container" id="contact" style="margin-top:18px">
-    <div class="contact">
-      <h2>Contact & Company Details</h2>
-      <div class="kv">
-        <b>Company</b><div>BXLANE International & Consulting BV</div>
-        <b>Head Office</b><div><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Excelciorlaan%2031%2C%201930%20Zaventem%2C%20Belgium">Excelciorlaan 31, 1930 Zaventem, BELGIË</a></div>
-        <b>Office (Wallonia)</b><div>Place d’Ardelle 30, 1331 Rixensart</div>
-        <b>Phone</b><div><a href="tel:+32491255954">+32 491 25 59 54</a></div>
-        <b>Email</b><div><a href="mailto:bxlaneinternational@gmail.com">bxlaneinternational@gmail.com</a></div>
-        <b>VAT / TVA</b><div>BE 0740.900.450</div>
-        <b>Company No.</b><div>BE 0791.648.573</div>
-      </div>
-
-      <div class="bank" style="margin-top:14px">
-        <b>Bank (FINTRO)</b><br>
-        IBAN: <code>BE63 1431 2019 3108</code> • BIC: <code>GEBABEBB</code>
-      </div>
-
-      <div class="row" style="margin-top:14px">
-        <a class="btn outline" href="https://www.google.com/maps/search/?api=1&query=Excelciorlaan%2031%2C%201930%20Zaventem%2C%20Belgium"
-           target="_blank" rel="noopener">Open in Maps</a>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="container">
-      <div class="muted">© <span id="year"></span> BXLANE International & Consulting BV. All rights reserved.</div>
-    </div>
-  </footer>
 
   <script>
-    const form=document.getElementById('emailForm');
-    document.getElementById('sendMail').addEventListener('click',(e)=>{
-      e.preventDefault();
-      const fd=new FormData(form);
-      const subject=`[Booking] ${fd.get('pickup')||''} → ${fd.get('drop')||''} (${fd.get('date')||''} ${fd.get('time')||''})`;
-      const body=`Hello BXLANE,
+    const ratePerKm = 4.5;
+    let pickupAutocomplete, dropoffAutocomplete;
+    let lastDistance = null, lastDuration = null, lastPrice = null;
 
-Pickup: ${fd.get('pickup')||''}
-Drop-off: ${fd.get('drop')||''}
-Date: ${fd.get('date')||''}
-Time: ${fd.get('time')||''}
-Passengers: ${fd.get('pax')||''}
+    function initAutocomplete() {
+      pickupAutocomplete = new google.maps.places.Autocomplete(document.getElementById("pickup"));
+      dropoffAutocomplete = new google.maps.places.Autocomplete(document.getElementById("dropoff"));
+    }
 
-Please confirm availability and price.
-Thank you.`;
-      window.location.href=`mailto:bxlaneinternational@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    function calculateDistance() {
+      const origin = document.getElementById("pickup").value;
+      const destination = document.getElementById("dropoff").value;
+      if (!origin || !destination) {
+        alert("Please enter both locations.");
+        return;
+      }
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix({
+        origins: [origin],
+        destinations: [destination],
+        travelMode: "DRIVING",
+        unitSystem: google.maps.UnitSystem.METRIC,
+      }, (response, status) => {
+        if (status !== "OK") {
+          alert("Error calculating distance: " + status);
+          return;
+        }
+        const data = response.rows[0].elements[0];
+        const distanceKm = data.distance.value / 1000;
+        const durationText = data.duration.text;
+        const price = (distanceKm * ratePerKm).toFixed(2);
+
+        lastDistance = distanceKm.toFixed(1);
+        lastDuration = durationText;
+        lastPrice = price;
+
+        const resultDiv = document.getElementById("result");
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+          <b>Distance:</b> ${lastDistance} km<br>
+          <b>Duration:</b> ${lastDuration}<br>
+          <b>Estimated Price:</b> €${lastPrice}
+        `;
+      });
+    }
+
+    // WhatsApp ve Email linkleri
+    document.getElementById("waBtn").addEventListener("click", () => {
+      const pickup = document.getElementById("pickup").value;
+      const dropoff = document.getElementById("dropoff").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const passengers = document.getElementById("passengers").value;
+      const text = encodeURIComponent(
+        `Transfer Request:\nPickup: ${pickup}\nDrop-off: ${dropoff}\nDate: ${date} ${time}\nPassengers: ${passengers}\nDistance: ${lastDistance} km\nDuration: ${lastDuration}\nEstimated Price: €${lastPrice}`
+      );
+      window.open(`https://wa.me/32491255954?text=${text}`, "_blank");
     });
-    document.getElementById('year').textContent=new Date().getFullYear();
+
+    document.getElementById("emailBtn").addEventListener("click", () => {
+      const pickup = document.getElementById("pickup").value;
+      const dropoff = document.getElementById("dropoff").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const passengers = document.getElementById("passengers").value;
+      const subject = encodeURIComponent("New Transfer Request");
+      const body = encodeURIComponent(
+        `Pickup: ${pickup}\nDrop-off: ${dropoff}\nDate: ${date} ${time}\nPassengers: ${passengers}\nDistance: ${lastDistance} km\nDuration: ${lastDuration}\nEstimated Price: €${lastPrice}`
+      );
+      window.location.href = `mailto:info@bxline.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete">
   </script>
 </body>
 </html>
