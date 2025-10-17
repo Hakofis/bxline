@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BXLINE – Payment</title>
+<style>
+  :root{--brand:#00b7ff;--ink:#0a2540;--ok:#0bb07b;--bg:#f4f8fd;--card:#fff}
+  *{box-sizing:border-box} body{margin:0;font-family:Segoe UI,system-ui,Arial,sans-serif;background:var(--bg);color:#222}
+  .wrap{max-width:900px;margin:28px auto;padding:0 16px}
+  .card{background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08);padding:22px}
+  h1{margin:10px 0 16px;color:var(--ink)}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .summary{background:#0d1b2a;color:#eaf2ff;border-radius:14px;padding:18px}
+  .summary p{margin:.3rem 0}
+  .price{font-size:22px;font-weight:800;color:#fff}
+  .btn{width:100%;padding:14px;border:0;border-radius:10px;background:var(--ok);color:#fff;font-weight:700;cursor:pointer}
+  .btn:hover{filter:brightness(.95)}
+  .btn.secondary{background:#e6f6ff;color:#083b55}
+  .foot{margin-top:14px;color:#667}
+  .kvs{font-size:14px;color:#567}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Secure Payment</h1>
+      <div class="grid">
+        <div class="summary" id="sum">
+          <h3 style="margin:0 0 8px">Booking Summary</h3>
+          <p id="s_route"></p>
+          <p id="s_when"></p>
+          <p id="s_vehicle"></p>
+          <p id="s_distance"></p>
+          <p id="s_duration"></p>
+          <p id="s_contact"></p>
+          <p class="price" id="s_amount"></p>
+          <p class="kvs">By proceeding, you agree that BXLINE will confirm availability and may adjust the final amount in case of route or service changes.</p>
+        </div>
+        <div>
+          <button class="btn" id="payBtn">Pay Now</button>
+          <div class="foot">Card • Apple Pay • Google Pay (via Stripe)</div>
+          <button class="btn secondary" style="margin-top:10px" id="backBtn">← Back</button>
+        </div>
+      </div>
+    </div>
+    <p class="kvs" style="margin-top:12px;text-align:center">
+      Need help? WhatsApp: <a href="https://wa.me/32491255954" target="_blank">+32 491 25 59 54</a>
+    </p>
+  </div>
+
+<script>
+  // 1) Read params
+  const qs = new URLSearchParams(location.search);
+  const amount   = qs.get('amount') || '0.00';
+  const route    = qs.get('route')  || '';
+  const when     = qs.get('when')   || '';
+  const pax      = qs.get('pax')    || '';
+  const vehicle  = qs.get('vehicle')|| '';
+  const distance = qs.get('distance')|| '';
+  const duration = qs.get('duration')|| '';
+  const name     = qs.get('name')   || '';
+  const email    = qs.get('email')  || '';
+  const phone    = qs.get('phone')  || '';
+
+  // 2) Render
+  document.getElementById('s_route').textContent    = 'Route: ' + route + (pax? ` • Pax: ${pax}`:'');
+  document.getElementById('s_when').textContent     = 'When: ' + when;
+  document.getElementById('s_vehicle').textContent  = 'Vehicle: ' + vehicle;
+  document.getElementById('s_distance').textContent = 'Distance: ' + distance;
+  document.getElementById('s_duration').textContent = 'Duration: ' + duration;
+  document.getElementById('s_contact').textContent  = 'Contact: ' + [name,email,phone].filter(Boolean).join(' • ');
+  document.getElementById('s_amount').textContent   = 'Total to Pay: €' + amount;
+
+  // 3) Payment Link (REPLACE THIS with your Stripe Payment Link)
+  const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_XXXXXX'; // <-- put your real Payment Link here
+
+  // You can append metadata-like info using query string for your internal tracking (optional)
+  const tracking = new URLSearchParams({
+    r: route, w: when, v: vehicle, a: amount
+  }).toString();
+
+  document.getElementById('payBtn').addEventListener('click', ()=>{
+    if(!STRIPE_PAYMENT_LINK || STRIPE_PAYMENT_LINK.includes('XXXXXX')){
+      alert('Configure your Stripe Payment Link in payment.html (STRIPE_PAYMENT_LINK).');
+      return;
+    }
+    // Redirect to Stripe Payment Link
+    const url = STRIPE_PAYMENT_LINK + (STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?') + tracking;
+    window.location.href = url;
+  });
+
+  document.getElementById('backBtn').addEventListener('click', ()=>{
+    history.back();
+  });
+</script>
+</body>
+</html>
