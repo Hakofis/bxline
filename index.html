@@ -67,6 +67,16 @@
   .small{color:#6b7b90;font-size:14px;margin-top:8px}
 </style>
 </head>
+<!-- Back to Start button -->
+<div style="text-align:center; margin-bottom:60px;">
+  <button id="backToStart" 
+          style="background:#00b7ff; color:#fff; border:none; border-radius:10px;
+                 padding:14px 28px; font-size:16px; font-weight:600; cursor:pointer;
+                 box-shadow:0 4px 10px rgba(0,0,0,.15); transition:0.3s;">
+    ⟲ Back to Start
+  </button>
+</div>
+
 <body>
   <section class="hero">
     <div class="inner">
@@ -379,6 +389,12 @@
       `Contact: ${state.name||'-'} • ${state.email||'-'} • ${state.phone||'-'}`;
     document.getElementById('sPrice').textContent =
       `Estimated Price: €${state.price.toFixed(2)}`;
+// Back to Start
+document.getElementById("backToStart").addEventListener("click", () => {
+  goTo("step1");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
   }
 
   function composeMessage(){
