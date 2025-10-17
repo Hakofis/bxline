@@ -47,6 +47,9 @@
   .car.selected{border-color:var(--brand)}
   .car .img{height:180px}
   .car img{width:100%;height:100%;object-fit:cover;display:block}
+  /* 20% smaller for Lexus & Tesla */
+  .car img.shrink{transform:scale(0.8); transform-origin:center center;}
+
   .car .name{padding:10px;text-align:center;font-weight:700}
 
   .summary{background:#0d1b2a;color:#eaf2ff;border-radius:14px;padding:18px}
@@ -65,10 +68,29 @@
   .footer a{color:#0a66c2;text-decoration:none}
   .footer a:hover{text-decoration:underline}
   .small{color:#6b7b90;font-size:14px;margin-top:8px}
+
+  /* Floating buttons */
+  #waBtn{
+    position:fixed; bottom:22px; right:22px; z-index:1000;
+    width:60px; height:60px; border-radius:50%; background:#25D366;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); border:0; cursor:pointer;
+  }
+  #waBtn:hover{background:#20ba5a}
+  #waBtn svg{width:32px; height:32px; fill:#fff}
+
+  #backStart{
+    position:fixed; bottom:92px; right:22px; z-index:999;
+    width:60px; height:60px; border-radius:50%;
+    background:var(--brand); color:#fff; border:0; cursor:pointer;
+    font-size:22px; font-weight:800;
+    box-shadow:0 6px 18px rgba(0,0,0,.20);
+  }
+  #backStart:hover{background:var(--brand2)}
 </style>
 </head>
 <body>
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="inner">
       <h1>BXLINE Airport & City Transfers</h1>
       <p>One-page booking • Live route on the map • Instant price</p>
@@ -108,7 +130,7 @@
     </section>
 
     <!-- STEP 2 -->
-    <section class="step" id="step2">
+    <section class="step" id="step2" style="display:none">
       <h2>Step 2 — Trip Details</h2>
       <p class="sub">Pick your date & time and tell us how many passengers.</p>
       <div class="grid-3">
@@ -123,16 +145,16 @@
     </section>
 
     <!-- STEP 3 -->
-    <section class="step" id="step3">
+    <section class="step" id="step3" style="display:none">
       <h2>Step 3 — Choose Vehicle</h2>
       <p class="sub">Select your car. (Price multiplier applies to base price.)</p>
       <div class="cars" id="cars">
         <div class="car" data-name="Lexus" data-multi="1.00">
-          <div class="img"><img src="assets/lexus.jpg" alt="Lexus"></div>
+          <div class="img"><img src="assets/lexus.jpg" alt="Lexus" class="shrink"></div>
           <div class="name">Lexus · ×1.00</div>
         </div>
         <div class="car" data-name="Tesla Model Y" data-multi="1.15">
-          <div class="img"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y"></div>
+          <div class="img"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y" class="shrink"></div>
           <div class="name">Tesla Model Y · ×1.15</div>
         </div>
         <div class="car" data-name="Renault Arkana" data-multi="0.95">
@@ -147,7 +169,7 @@
     </section>
 
     <!-- STEP 4 -->
-    <section class="step" id="step4">
+    <section class="step" id="step4" style="display:none">
       <h2>Step 4 — Contact</h2>
       <p class="sub">We’ll confirm your booking as soon as we receive your request.</p>
       <div class="grid">
@@ -165,7 +187,7 @@
     </section>
 
     <!-- STEP 5 -->
-    <section class="step" id="step5">
+    <section class="step" id="step5" style="display:none">
       <h2>Step 5 — Review & Send</h2>
       <p class="sub">Check your details below and send your request.</p>
       <div class="summary" id="summaryBox">
@@ -187,14 +209,14 @@
     </section>
   </div>
 
-  <!-- ===== Footer: QR bilgilerine göre iletişim (IBAN/vergisiz) ===== -->
+  <!-- ===== Footer ===== -->
   <div class="footer-wrap">
     <div class="hr"></div>
     <div class="footer">
       <div class="fgrid">
         <div>
           <h4>BXLANE International & Consulting BV</h4>
-          <div>Excelciorlaan 31, <b>1930 Zaventem</b>, Belgica</div>
+          <div>Excelsiorlaan 31, <b>1930 Zaventem</b>, Belgium</div>
           <div class="small" style="margin-top:8px">
             <b>Phone (WhatsApp):</b> <a href="https://wa.me/32491255954" target="_blank">+32 491 25 59 54</a><br/>
             <b>Email:</b> <a href="mailto:bxlaneinternational@gmail.com">bxlaneinternational@gmail.com</a>
@@ -203,15 +225,19 @@
         <div>
           <h4>Support & Bookings</h4>
           <div class="small">Every day · 24/7</div>
-          <div class="small" style="margin-top:6px">
-            Quick help on WhatsApp:<br>
-            <a href="https://wa.me/32491255954?text=Hello%2C%20I%20would%20like%20to%20book%20a%20transfer." target="_blank">Start chat →</a>
-          </div>
         </div>
       </div>
       <div class="small" style="margin-top:10px">© BXLANE International & Consulting BV</div>
     </div>
   </div>
+
+  <!-- Floating: WhatsApp + Back to Start -->
+  <button id="waBtn" title="Chat on WhatsApp" aria-label="WhatsApp">
+    <!-- classic WhatsApp icon -->
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.43c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.58-1.5-1.85-.16-.27-.02-.41.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.52-.44-.45-.62-.46h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.98 2.66 1.11 2.84c.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.55.57.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.23-.64.23-1.18.16-1.29-.07-.11-.25-.18-.52-.32zM16 3C9.37 3 4 8.37 4 15c0 2.12.56 4.1 1.54 5.81L4 29l8.36-1.47A11.95 11.95 0 0 0 16 27c6.63 0 12-5.37 12-12S22.63 3 16 3zm0 22.91c-1.83 0-3.53-.49-5-1.35l-.36-.21-4.96.88.91-4.84-.24-.39A9.91 9.91 0 1 1 26 15a9.91 9.91 0 0 1-10 10.91z"/></svg>
+  </button>
+
+  <button id="backStart" title="Back to Start" aria-label="Back to Start">⟲</button>
 
 <script>
   const ratePerKm = 4.5;
@@ -254,6 +280,16 @@
       });
     });
     document.querySelector('.car').classList.add('selected');
+
+    // Floating buttons
+    document.getElementById('waBtn').addEventListener('click', ()=>{
+      window.open('https://wa.me/32491255954?text=Hello%2C%20I%20would%20like%20to%20book%20a%20transfer.','_blank');
+    });
+    document.getElementById('backStart').addEventListener('click', ()=>{
+      // Back to Step 1 + smooth scroll
+      showOnly('step1');
+      document.getElementById('top').scrollIntoView({behavior:'smooth'});
+    });
   }
 
   function maybeAutoCalc(){
@@ -306,6 +342,7 @@
     path.forEach(p=>bounds.extend(p));
     map.fitBounds(bounds);
 
+    // Distance + duration
     const svc = new google.maps.DistanceMatrixService();
     const dmEl = await new Promise((resolve,reject)=>{
       svc.getDistanceMatrix({
@@ -347,8 +384,11 @@
     }
   }
 
-  function goTo(id){
-    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  // Wizard navigation (show only requested step)
+  function showOnly(id){
+    document.querySelectorAll('.step').forEach(s=>s.style.display='none');
+    document.getElementById(id).style.display='block';
+
     const order=['step1','step2','step3','step4','step5'];
     const idx=order.indexOf(id);
     const dots=[...document.querySelectorAll('.dot')];
@@ -357,8 +397,14 @@
     bars.forEach((b,i)=>b.classList.toggle('fill',i<idx));
   }
 
+  function goTo(id){
+    // Keep wizard behavior
+    showOnly(id);
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
   function buildSummary(){
-    if(!state.km){ alert("Please calculate route (Step 1) first."); goTo('step1'); return; }
+    if(!state.km){ alert("Please calculate the route first (Step 1)."); goTo('step1'); return; }
     state.date=document.getElementById('date').value;
     state.time=document.getElementById('time').value;
     state.pax =document.getElementById('passengers').value||'1';
@@ -388,9 +434,9 @@ Drop-off: ${state.destination}
 Date: ${state.date} ${state.time}
 Passengers: ${state.pax}
 Vehicle: ${state.vehicle} (x${state.multiplier})
-Distance: ${state.km.toFixed(1)} km
+Distance: ${state.km?.toFixed(1)} km
 Duration: ${state.durationText}
-Estimated Price: €${state.price.toFixed(2)}
+Estimated Price: €${state.price?.toFixed(2)}
 Name: ${state.name}
 Email: ${state.email}
 Phone: ${state.phone}
@@ -400,7 +446,7 @@ Notes: ${state.notes||'-'}`;
     buildSummary();
     const subject=encodeURIComponent('New Transfer Request');
     const body=encodeURIComponent(composeMessage());
-    window.location.href=`mailto:info@bxline.com?subject=${subject}&body=${body}`;
+    window.location.href=`mailto:bxlaneinternational@gmail.com?subject=${subject}&body=${body}`;
   }
   function sendWA(){
     buildSummary();
