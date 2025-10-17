@@ -45,9 +45,8 @@
   @media (max-width:900px){.cars{grid-template-columns:1fr}}
   .car{border:2px solid #e7eef6;border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;transition:.2s}
   .car.selected{border-color:var(--brand)}
-  .car .img{height:180px;display:flex;align-items:center;justify-content:center;background:#fff;}
-  .car img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s;}
-  .car img.shrink{transform:scale(0.9);} /* %10 küçültme */
+  .car .img{height:180px}
+  .car img{width:100%;height:100%;object-fit:cover;display:block}
   .car .name{padding:10px;text-align:center;font-weight:700}
 
   .summary{background:#0d1b2a;color:#eaf2ff;border-radius:14px;padding:18px}
@@ -56,6 +55,7 @@
   .price{font-size:22px;font-weight:800;color:#fff}
   .ok{color:var(--ok);font-weight:700}
 
+  /* ===== footer ===== */
   .footer-wrap{max-width:1100px;margin:0 auto 60px;padding:0 16px}
   .hr{height:1px;background:#dbe5f0;margin:28px 0}
   .footer{background:#ffffff;border:1px solid #e8eef6;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.06);padding:18px}
@@ -65,30 +65,9 @@
   .footer a{color:#0a66c2;text-decoration:none}
   .footer a:hover{text-decoration:underline}
   .small{color:#6b7b90;font-size:14px;margin-top:8px}
-
-  /* back to top button */
-  #backToTop{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    background:var(--brand);
-    color:#fff;
-    border:none;
-    border-radius:50%;
-    width:48px;
-    height:48px;
-    font-size:22px;
-    cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,.2);
-    display:none;
-    transition:.3s;
-    z-index:999;
-  }
-  #backToTop:hover{background:var(--brand2);transform:translateY(-2px);}
 </style>
 </head>
 <body>
-  <!-- HERO -->
   <section class="hero">
     <div class="inner">
       <h1>BXLINE Airport & City Transfers</h1>
@@ -97,7 +76,6 @@
   </section>
 
   <div class="container">
-    <!-- PROGRESS -->
     <div class="progress" id="progress">
       <div class="dot active">1</div><div class="bar fill"></div>
       <div class="dot">2</div><div class="bar"></div>
@@ -130,7 +108,7 @@
     </section>
 
     <!-- STEP 2 -->
-    <section class="step" id="step2" style="display:none">
+    <section class="step" id="step2">
       <h2>Step 2 — Trip Details</h2>
       <p class="sub">Pick your date & time and tell us how many passengers.</p>
       <div class="grid-3">
@@ -145,16 +123,16 @@
     </section>
 
     <!-- STEP 3 -->
-    <section class="step" id="step3" style="display:none">
+    <section class="step" id="step3">
       <h2>Step 3 — Choose Vehicle</h2>
       <p class="sub">Select your car. (Price multiplier applies to base price.)</p>
       <div class="cars" id="cars">
         <div class="car" data-name="Lexus" data-multi="1.00">
-          <div class="img"><img src="assets/lexus.jpg" alt="Lexus" class="shrink"></div>
+          <div class="img"><img src="assets/lexus.jpg" alt="Lexus"></div>
           <div class="name">Lexus · ×1.00</div>
         </div>
         <div class="car" data-name="Tesla Model Y" data-multi="1.15">
-          <div class="img"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y" class="shrink"></div>
+          <div class="img"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y"></div>
           <div class="name">Tesla Model Y · ×1.15</div>
         </div>
         <div class="car" data-name="Renault Arkana" data-multi="0.95">
@@ -169,7 +147,7 @@
     </section>
 
     <!-- STEP 4 -->
-    <section class="step" id="step4" style="display:none">
+    <section class="step" id="step4">
       <h2>Step 4 — Contact</h2>
       <p class="sub">We’ll confirm your booking as soon as we receive your request.</p>
       <div class="grid">
@@ -187,7 +165,7 @@
     </section>
 
     <!-- STEP 5 -->
-    <section class="step" id="step5" style="display:none">
+    <section class="step" id="step5">
       <h2>Step 5 — Review & Send</h2>
       <p class="sub">Check your details below and send your request.</p>
       <div class="summary" id="summaryBox">
@@ -209,14 +187,14 @@
     </section>
   </div>
 
-  <!-- ===== Footer: tek adres ===== -->
+  <!-- ===== Footer: QR bilgilerine göre iletişim (IBAN/vergisiz) ===== -->
   <div class="footer-wrap">
     <div class="hr"></div>
     <div class="footer">
       <div class="fgrid">
         <div>
           <h4>BXLANE International & Consulting BV</h4>
-          <div>Excelciorlaan 31, <b>1930 Zaventem</b>, Belgium</div>
+          <div>Excelciorlaan 31, <b>1930 Zaventem</b>, Belgica</div>
           <div class="small" style="margin-top:8px">
             <b>Phone (WhatsApp):</b> <a href="https://wa.me/32491255954" target="_blank">+32 491 25 59 54</a><br/>
             <b>Email:</b> <a href="mailto:bxlaneinternational@gmail.com">bxlaneinternational@gmail.com</a>
@@ -235,161 +213,200 @@
     </div>
   </div>
 
-  <!-- Back to top button -->
-  <button id="backToTop" title="Back to top">↑</button>
-
 <script>
-/* ---------- UI helpers ---------- */
-function setProgress(step){
-  const dots = document.querySelectorAll('.progress .dot');
-  const bars = document.querySelectorAll('.progress .bar');
-  dots.forEach((d,i)=>d.classList.toggle('active', i<step));
-  bars.forEach((b,i)=>b.classList.toggle('fill', i<step-1));
-}
-function goTo(id){
-  document.querySelectorAll('.step').forEach(s=>s.style.display='none');
-  document.getElementById(id).style.display='block';
-  const stepNo = {step1:1, step2:2, step3:3, step4:4, step5:5}[id] || 1;
-  setProgress(stepNo);
-}
+  const ratePerKm = 4.5;
+  const defaultCountry = "be";
+  const state = {
+    origin:"", destination:"", km:null, durationText:"", price:null,
+    date:"", time:"", pax:"1", vehicle:"Lexus", multiplier:1.00,
+    name:"", email:"", phone:"", notes:""
+  };
 
-/* ---------- Back to top ---------- */
-const btnTop = document.getElementById("backToTop");
-window.addEventListener("scroll",()=>{
-  btnTop.style.display = (document.documentElement.scrollTop>100) ? "block" : "none";
-});
-btnTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+  let map, directionsService, pickupAC, dropoffAC;
+  let routePolyline = null, startMarker = null, endMarker = null;
 
-/* ---------- Maps & pricing ---------- */
-let map, dirService, dirRenderer, ac1, ac2;
-let lastKM = 0, lastMins = 0;
-const ratePerKm = 4.5; // €
-let vehicle = {name:"Lexus", multi:1.00};
-
-function initAll(){
-  // map
-  map = new google.maps.Map(document.getElementById('map'),{
-    center:{lat:50.850, lng:4.351}, zoom:9, mapTypeControl:false, streetViewControl:false
-  });
-  dirService = new google.maps.DirectionsService();
-  dirRenderer = new google.maps.DirectionsRenderer({
-    map,
-    polylineOptions:{strokeColor:'#e11900', strokeWeight:5}
-  });
-
-  // places autocomplete
-  ac1 = new google.maps.places.Autocomplete(document.getElementById('pickup'), {types:['geocode']});
-  ac2 = new google.maps.places.Autocomplete(document.getElementById('dropoff'), {types:['geocode']});
-
-  // default values to demo
-  document.getElementById('pickup').value = "Mortsel, Belgium";
-  document.getElementById('dropoff').value = "Brussels Airport (BRU), Leopoldlaan, Zaventem, Belgium";
-
-  // buttons
-  document.getElementById('btnRoute').addEventListener('click', calcAndDrawRoute);
-  document.getElementById('btnNext1').addEventListener('click', async ()=>{
-    await calcAndDrawRoute(); // otomatik hesapla
-    goTo('step2');
-  });
-
-  // vehicles
-  document.querySelectorAll('.car').forEach(c=>{
-    c.addEventListener('click',()=>{
-      document.querySelectorAll('.car').forEach(x=>x.classList.remove('selected'));
-      c.classList.add('selected');
-      vehicle = {name:c.dataset.name, multi: parseFloat(c.dataset.multi)};
+  function initAll(){
+    map = new google.maps.Map(document.getElementById('map'), {
+      center:{lat:50.8503,lng:4.3517}, zoom:9, mapTypeControl:false, streetViewControl:false
     });
-  });
-  // default select first
-  document.querySelector('.car').classList.add('selected');
+    directionsService = new google.maps.DirectionsService();
 
-  // send actions
-  document.getElementById('sendMail').addEventListener('click', sendEmail);
-  document.getElementById('sendWA').addEventListener('click', sendWA);
-}
+    const opts = { componentRestrictions:{country:defaultCountry} };
+    pickupAC  = new google.maps.places.Autocomplete(document.getElementById('pickup'), opts);
+    dropoffAC = new google.maps.places.Autocomplete(document.getElementById('dropoff'), opts);
 
-/* draw route + calc price */
-async function calcAndDrawRoute(){
-  const origin = document.getElementById('pickup').value.trim();
-  const dest = document.getElementById('dropoff').value.trim();
-  const err = document.getElementById('calcError');
-  const out = document.getElementById('calcResult');
-  err.style.display='none'; out.style.display='none';
+    pickupAC.addListener('place_changed', () => maybeAutoCalc());
+    dropoffAC.addListener('place_changed', () => maybeAutoCalc());
 
-  if(!origin || !dest){
-    err.textContent='Please enter both pickup and drop-off.'; err.style.display='block'; return;
+    document.getElementById('btnRoute').addEventListener('click', ensureRouteThen(()=>{}));
+    document.getElementById('btnNext1').addEventListener('click', ensureRouteThen(()=>goTo('step2')));
+
+    document.getElementById('sendMail').addEventListener('click', sendEmail);
+    document.getElementById('sendWA').addEventListener('click', sendWA);
+
+    document.querySelectorAll('.car').forEach(card=>{
+      card.addEventListener('click',()=>{
+        document.querySelectorAll('.car').forEach(c=>c.classList.remove('selected'));
+        card.classList.add('selected');
+        state.vehicle = card.dataset.name;
+        state.multiplier = parseFloat(card.dataset.multi);
+        if(state.km){ computePrice(); showCalcBox(); }
+      });
+    });
+    document.querySelector('.car').classList.add('selected');
   }
 
-  try{
-    const res = await dirService.route({
-      origin, destination: dest, travelMode: google.maps.TravelMode.DRIVING
+  function maybeAutoCalc(){
+    const a = document.getElementById('pickup').value.trim();
+    const b = document.getElementById('dropoff').value.trim();
+    if(a && b){ calcRoute().catch(showError); }
+  }
+
+  function ensureRouteThen(nextFn){
+    return async function(){
+      try{
+        await calcRoute();
+        nextFn && nextFn();
+      }catch(e){
+        showError(e.message||e);
+      }
+    }
+  }
+
+  function clearRoute(){
+    if(routePolyline){ routePolyline.setMap(null); routePolyline=null; }
+    if(startMarker){ startMarker.setMap(null); startMarker=null; }
+    if(endMarker){ endMarker.setMap(null); endMarker=null; }
+  }
+
+  async function calcRoute(){
+    const origin = document.getElementById('pickup').value.trim();
+    const destination = document.getElementById('dropoff').value.trim();
+    if(!origin || !destination) throw "Please enter both Pickup and Drop-off locations.";
+
+    state.origin = origin; state.destination = destination;
+    document.getElementById('calcError').style.display='none';
+
+    const result = await new Promise((resolve,reject)=>{
+      directionsService.route({origin, destination, travelMode:'DRIVING'},(res,status)=>{
+        if(status==='OK' && res.routes.length){ resolve(res.routes[0]); }
+        else reject("Directions error: " + status);
+      });
     });
-    dirRenderer.setDirections(res);
 
-    const leg = res.routes[0].legs[0];
-    lastKM = leg.distance.value/1000; // km
-    lastMins = Math.round(leg.duration.value/60);
-    const base = lastKM * ratePerKm;
-    const price = base * vehicle.multi;
+    clearRoute();
+    const path = result.overview_path;
+    routePolyline = new google.maps.Polyline({
+      map, path,
+      strokeColor:'#e11900', strokeWeight:6, strokeOpacity:0.95
+    });
+    startMarker = new google.maps.Marker({map, position: path[0], label:"A"});
+    endMarker   = new google.maps.Marker({map, position: path[path.length-1], label:"B"});
+    const bounds = new google.maps.LatLngBounds();
+    path.forEach(p=>bounds.extend(p));
+    map.fitBounds(bounds);
 
-    out.innerHTML = `Distance: <b>${lastKM.toFixed(1)} km</b> • Duration: <b>${lastMins} mins</b> • Estimated Price (x${vehicle.multi.toFixed(2)}): <b>€${price.toFixed(2)}</b>`;
-    out.style.display='block';
-  }catch(e){
-    err.textContent = 'Directions error: ' + (e?.message || 'REQUEST_DENIED');
+    const svc = new google.maps.DistanceMatrixService();
+    const dmEl = await new Promise((resolve,reject)=>{
+      svc.getDistanceMatrix({
+        origins:[origin], destinations:[destination],
+        travelMode:'DRIVING', unitSystem:google.maps.UnitSystem.METRIC
+      }, (resp,status)=>{
+        if(status!=='OK') return reject("Distance Matrix error: "+status);
+        const el = resp.rows?.[0]?.elements?.[0];
+        if(!el || el.status!=='OK') return reject("Route status: "+(el?.status||'UNKNOWN'));
+        resolve(el);
+      });
+    });
+
+    state.km = dmEl.distance.value/1000;
+    state.durationText = dmEl.duration.text;
+    computePrice();
+    showCalcBox();
+  }
+
+  function showError(msg){
+    const err = document.getElementById('calcError');
     err.style.display='block';
+    err.textContent = msg;
   }
-}
 
-/* summary + send */
-function buildSummary(){
-  const pick = document.getElementById('pickup').value;
-  const drop = document.getElementById('dropoff').value;
-  const date = document.getElementById('date').value || '-';
-  const time = document.getElementById('time').value || '-';
-  const pax  = document.getElementById('passengers').value || '1';
+  function computePrice(){
+    const base = state.km * ratePerKm;
+    state.price = +(base * state.multiplier).toFixed(2);
+  }
 
-  const base = lastKM * ratePerKm;
-  const price = isFinite(base) ? (base*vehicle.multi) : 0;
+  function showCalcBox(){
+    const box = document.getElementById('calcResult');
+    if(state.km){
+      box.style.display='block';
+      box.innerHTML = `<b>Distance:</b> ${state.km.toFixed(1)} km &nbsp; • &nbsp;
+                       <b>Duration:</b> ${state.durationText} &nbsp; • &nbsp;
+                       <b>Estimated Price:</b> €${state.price.toFixed(2)}
+                       <br><small>Vehicle: ${state.vehicle} (×${state.multiplier.toFixed(2)})</small>`;
+    }
+  }
 
-  document.getElementById('sRoute').innerHTML = `Route: <b>${pick}</b> → <b>${drop}</b>`;
-  document.getElementById('sTime').innerHTML  = `When: <b>${date} ${time}</b> • Passengers: <b>${pax}</b> • Distance: <b>${isFinite(lastKM)?lastKM.toFixed(1):'-'} km</b> • Duration: <b>${isFinite(lastMins)?lastMins:'-'} mins</b>`;
-  document.getElementById('sVehicle').innerHTML= `Vehicle: <b>${vehicle.name} (×${vehicle.multi.toFixed(2)})</b>`;
-  const nm  = (document.getElementById('name').value||'-');
-  const em  = (document.getElementById('email').value||'-');
-  const ph  = (document.getElementById('phone').value||'-');
-  document.getElementById('sContact').innerHTML= `Contact: <b>${nm}</b> • <span>${em}</span> • <span>${ph}</span>`;
-  document.getElementById('sPrice').textContent= `Estimated Price: €${isFinite(price)?price.toFixed(2):'0.00'}`;
-}
+  function goTo(id){
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    const order=['step1','step2','step3','step4','step5'];
+    const idx=order.indexOf(id);
+    const dots=[...document.querySelectorAll('.dot')];
+    const bars=[...document.querySelectorAll('.bar')];
+    dots.forEach((d,i)=>d.classList.toggle('active',i<=idx));
+    bars.forEach((b,i)=>b.classList.toggle('fill',i<idx));
+  }
 
-/* helpers to assemble message */
-function currentBookingText(){
-  const pick = document.getElementById('pickup').value;
-  const drop = document.getElementById('dropoff').value;
-  const date = document.getElementById('date').value || '-';
-  const time = document.getElementById('time').value || '-';
-  const pax  = document.getElementById('passengers').value || '1';
-  const nm  = (document.getElementById('name').value||'-');
-  const em  = (document.getElementById('email').value||'-');
-  const ph  = (document.getElementById('phone').value||'-');
+  function buildSummary(){
+    if(!state.km){ alert("Please calculate route (Step 1) first."); goTo('step1'); return; }
+    state.date=document.getElementById('date').value;
+    state.time=document.getElementById('time').value;
+    state.pax =document.getElementById('passengers').value||'1';
+    state.name=document.getElementById('name').value;
+    state.email=document.getElementById('email').value;
+    state.phone=document.getElementById('phone').value;
+    state.notes=document.getElementById('notes').value;
 
-  const base = lastKM*ratePerKm; const price = isFinite(base)?(base*vehicle.multi).toFixed(2):'0.00';
-  return `Route: ${pick} -> ${drop}
-When: ${date} ${time}
-Passengers: ${pax}
-Vehicle: ${vehicle.name} (x${vehicle.multi.toFixed(2)})
-Distance: ${isFinite(lastKM)?lastKM.toFixed(1):'-'} km • Duration: ${isFinite(lastMins)?lastMins:'-'} mins
-Estimated Price: €${price}
-Contact: ${nm} • ${em} • ${ph}`;
-}
-function sendEmail(){
-  const subject = encodeURIComponent('BXLINE Transfer Request');
-  const body    = encodeURIComponent(currentBookingText());
-  window.location.href = `mailto:bxlaneinternational@gmail.com?subject=${subject}&body=${body}`;
-}
-function sendWA(){
-  const msg = encodeURIComponent("Hello, I'd like to book a transfer:\n\n"+currentBookingText());
-  window.open(`https://wa.me/32491255954?text=${msg}`,'_blank');
-}
+    computePrice();
+
+    document.getElementById('sRoute').textContent =
+      `Route: ${state.origin} → ${state.destination}`;
+    document.getElementById('sTime').textContent =
+      `When: ${state.date||'-'} ${state.time||''} • Passengers: ${state.pax}`;
+    document.getElementById('sVehicle').textContent =
+      `Vehicle: ${state.vehicle} (×${state.multiplier.toFixed(2)}) • Distance: ${state.km.toFixed(1)} km • Duration: ${state.durationText}`;
+    document.getElementById('sContact').textContent =
+      `Contact: ${state.name||'-'} • ${state.email||'-'} • ${state.phone||'-'}`;
+    document.getElementById('sPrice').textContent =
+      `Estimated Price: €${state.price.toFixed(2)}`;
+  }
+
+  function composeMessage(){
+    return `Transfer Request:
+Pickup: ${state.origin}
+Drop-off: ${state.destination}
+Date: ${state.date} ${state.time}
+Passengers: ${state.pax}
+Vehicle: ${state.vehicle} (x${state.multiplier})
+Distance: ${state.km.toFixed(1)} km
+Duration: ${state.durationText}
+Estimated Price: €${state.price.toFixed(2)}
+Name: ${state.name}
+Email: ${state.email}
+Phone: ${state.phone}
+Notes: ${state.notes||'-'}`;
+  }
+  function sendEmail(){
+    buildSummary();
+    const subject=encodeURIComponent('New Transfer Request');
+    const body=encodeURIComponent(composeMessage());
+    window.location.href=`mailto:info@bxline.com?subject=${subject}&body=${body}`;
+  }
+  function sendWA(){
+    buildSummary();
+    const text=encodeURIComponent(composeMessage());
+    window.open(`https://wa.me/32491255954?text=${text}`,'_blank');
+  }
 </script>
 
 <!-- Google Maps -->
