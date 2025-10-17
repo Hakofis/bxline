@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="row-actions" style="margin-top:12px">
-        <button class="btn" id="btnRoute">Calculate</button>
+        <button class="btn" id="btnRoute">Show Route & Calculate</button>
         <button class="btn light" id="btnNext1">Next: Trip Details</button>
       </div>
       <div id="map" style="margin-top:14px"></div>
@@ -185,26 +185,26 @@
     name:"", email:"", phone:"", notes:""
   };
 
-  let map, directionsService, directionsRenderer, pickupAC, dropoffAC;
+  let map, directionsService, pickupAC, dropoffAC;
+  let routePolyline = null, startMarker = null, endMarker = null;
 
   function initAll(){
     map = new google.maps.Map(document.getElementById('map'), {
       center:{lat:50.8503,lng:4.3517}, zoom:9, mapTypeControl:false, streetViewControl:false
     });
     directionsService = new google.maps.DirectionsService();
-    // Renderer her hesaplamada tekrar set edilecek (kırmızı çizgi garanti)
-    makeRenderer();
 
     const opts = { componentRestrictions:{country:defaultCountry} };
     pickupAC  = new google.maps.places.Autocomplete(document.getElementById('pickup'), opts);
     dropoffAC = new google.maps.places.Autocomplete(document.getElementById('dropoff'), opts);
 
-    // Autocomplete'te yer seçilince hesapla
+    // Yer seçilince hesapla
     pickupAC.addListener('place_changed', () => maybeAutoCalc());
     dropoffAC.addListener('place_changed', () => maybeAutoCalc());
 
     document.getElementById('btnRoute').addEventListener('click', ensureRouteThen(()=>{}));
     document.getElementById('btnNext1').addEventListener('click', ensureRouteThen(()=>goTo('step2')));
+
     document.getElementById('sendMail').addEventListener('click', sendEmail);
     document.getElementById('sendWA').addEventListener('click', sendWA);
 
@@ -220,23 +220,12 @@
     document.querySelector('.car').classList.add('selected');
   }
 
-  function makeRenderer(){
-    if(directionsRenderer) directionsRenderer.setMap(null);
-    directionsRenderer = new google.maps.DirectionsRenderer({
-      preserveViewport:false,
-      suppressMarkers:false,
-      polylineOptions:{strokeColor:'#e11900',strokeWeight:5,strokeOpacity:.95}
-    });
-    directionsRenderer.setMap(map);
-  }
-
   function maybeAutoCalc(){
     const a = document.getElementById('pickup').value.trim();
     const b = document.getElementById('dropoff').value.trim();
     if(a && b){ calcRoute().catch(showError); }
   }
 
-  // Next/Calculate butonları için: önce hesapla, sonra devam et
   function ensureRouteThen(nextFn){
     return async function(){
       try{
@@ -248,6 +237,13 @@
     }
   }
 
+  // Polyline & markers temizle
+  function clearRoute(){
+    if(routePolyline){ routePolyline.setMap(null); routePolyline=null; }
+    if(startMarker){ startMarker.setMap(null); startMarker=null; }
+    if(endMarker){ endMarker.setMap(null); endMarker=null; }
+  }
+
   async function calcRoute(){
     const origin = document.getElementById('pickup').value.trim();
     const destination = document.getElementById('dropoff').value.trim();
@@ -256,23 +252,33 @@
     state.origin = origin; state.destination = destination;
     document.getElementById('calcError').style.display='none';
 
-    // 1) Directions (çizgi) — Promise wrapper
-    await new Promise((resolve,reject)=>{
-      makeRenderer(); // her seferinde yeniden (çizgi kesin)
+    // 1) Directions: overview_path al, kendi kırmızı polylinemizi çiz
+    const result = await new Promise((resolve,reject)=>{
       directionsService.route({origin, destination, travelMode:'DRIVING'},(res,status)=>{
-        if(status==='OK' && res.routes.length){
-          directionsRenderer.setDirections(res);
-          map.fitBounds(res.routes[0].bounds);
-          resolve();
-        }else{
-          reject("Directions error: " + status);
-        }
+        if(status==='OK' && res.routes.length){ resolve(res.routes[0]); }
+        else reject("Directions error: " + status);
       });
     });
 
+    clearRoute();
+    const path = result.overview_path; // LatLng[] — geometry library gerekmez
+    routePolyline = new google.maps.Polyline({
+      map, path,
+      strokeColor:'#e11900', strokeWeight:6, strokeOpacity:0.95
+    });
+
+    // Başlangıç/varış işaretçileri
+    startMarker = new google.maps.Marker({map, position: path[0], label:"A"});
+    endMarker   = new google.maps.Marker({map, position: path[path.length-1], label:"B"});
+
+    // Haritayı rotaya uydur
+    const bounds = new google.maps.LatLngBounds();
+    path.forEach(p=>bounds.extend(p));
+    map.fitBounds(bounds);
+
     // 2) Distance Matrix
     const svc = new google.maps.DistanceMatrixService();
-    const dmRes = await new Promise((resolve,reject)=>{
+    const dmEl = await new Promise((resolve,reject)=>{
       svc.getDistanceMatrix({
         origins:[origin], destinations:[destination],
         travelMode:'DRIVING', unitSystem:google.maps.UnitSystem.METRIC
@@ -284,8 +290,8 @@
       });
     });
 
-    state.km = dmRes.distance.value/1000;
-    state.durationText = dmRes.duration.text;
+    state.km = dmEl.distance.value/1000;
+    state.durationText = dmEl.duration.text;
     computePrice();
     showCalcBox();
   }
@@ -312,7 +318,6 @@
     }
   }
 
-  // NAV + PROGRESS
   function goTo(id){
     document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
     const order=['step1','step2','step3','step4','step5'];
@@ -323,7 +328,6 @@
     bars.forEach((b,i)=>b.classList.toggle('fill',i<idx));
   }
 
-  // SUMMARY
   function buildSummary(){
     if(!state.km){ alert("Please calculate route (Step 1) first."); goTo('step1'); return; }
     state.date=document.getElementById('date').value;
@@ -348,7 +352,6 @@
       `Estimated Price: €${state.price.toFixed(2)}`;
   }
 
-  // SHARE
   function composeMessage(){
     return `Transfer Request:
 Pickup: ${state.origin}
@@ -377,6 +380,7 @@ Notes: ${state.notes||'-'}`;
   }
 </script>
 
+<!-- Google Maps: kendi anahtarını yaz -->
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initAll">
 </script>
