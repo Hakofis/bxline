@@ -47,7 +47,7 @@
   .car.selected{border-color:var(--brand)}
   .car .img{height:180px;display:flex;align-items:center;justify-content:center;background:#fff;}
   .car img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s;}
-  .car img.shrink{transform:scale(0.9);} /* %10 küçültme */
+  .car img.shrink{transform:scale(0.9);} /* %10 küçült */
   .car .name{padding:10px;text-align:center;font-weight:700}
 
   .summary{background:#0d1b2a;color:#eaf2ff;border-radius:14px;padding:18px}
@@ -66,45 +66,18 @@
   .footer a:hover{text-decoration:underline}
   .small{color:#6b7b90;font-size:14px;margin-top:8px}
 
+  /* Floating buttons */
   #backToTop{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    background:var(--brand);
-    color:#fff;
-    border:none;
-    border-radius:50%;
-    width:48px;
-    height:48px;
-    font-size:22px;
-    cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,.2);
-    display:none;
-    transition:.3s;
-    z-index:998;
+    position:fixed;bottom:25px;right:25px;background:var(--brand);color:#fff;border:none;border-radius:50%;
+    width:48px;height:48px;font-size:22px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);display:none;transition:.3s;z-index:998;
   }
   #backToTop:hover{background:var(--brand2);transform:translateY(-2px);}
-
-  /* WhatsApp floating button */
   #whatsappBtn{
-    position:fixed;
-    bottom:25px;
-    right:90px;
-    background:#25D366;
-    color:#fff;
-    border:none;
-    border-radius:50%;
-    width:50px;
-    height:50px;
-    font-size:24px;
-    cursor:pointer;
-    box-shadow:0 4px 12px rgba(0,0,0,.2);
-    z-index:999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    position:fixed;bottom:25px;right:90px;background:#25D366;color:#fff;border:none;border-radius:50%;
+    width:50px;height:50px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:999;display:flex;align-items:center;justify-content:center;
   }
   #whatsappBtn:hover{background:#20ba5a;transform:scale(1.05);}
+  #whatsappBtn svg{width:26px;height:26px;fill:#fff;display:block}
 </style>
 </head>
 <body>
@@ -247,10 +220,16 @@
   </div>
 
   <!-- Floating buttons -->
-  <button id="whatsappBtn" title="Chat on WhatsApp">💬</button>
-  <button id="backToTop" title="Back to top">↑</button>
+  <button id="whatsappBtn" title="Chat on WhatsApp" aria-label="WhatsApp">
+    <!-- classic WA svg -->
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M19.11 17.43c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.58-1.5-1.85-.16-.27-.02-.41.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.52-.44-.45-.62-.46h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.98 2.66 1.11 2.84c.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.55.57.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.23-.64.23-1.18.16-1.29-.07-.11-.25-.18-.52-.32zM16 3C9.37 3 4 8.37 4 15c0 2.12.56 4.1 1.54 5.81L4 29l8.36-1.47A11.95 11.95 0 0 0 16 27c6.63 0 12-5.37 12-12S22.63 3 16 3zm0 22.91c-1.83 0-3.53-.49-5-1.35l-.36-.21-4.96.88.91-4.84-.24-.39A9.91 9.91 0 1 1 26 15a9.91 9.91 0 0 1-10 10.91z"/>
+    </svg>
+  </button>
+  <button id="backToTop" title="Back to top" aria-label="Back to top">↑</button>
 
 <script>
+/* -------- Progress / Navigation ---------- */
 function setProgress(step){
   const dots=document.querySelectorAll('.progress .dot');
   const bars=document.querySelectorAll('.progress .bar');
@@ -265,6 +244,7 @@ function goTo(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+/* -------- Floating Buttons ---------- */
 const btnTop=document.getElementById("backToTop");
 window.addEventListener("scroll",()=>{btnTop.style.display=(document.documentElement.scrollTop>100)?"block":"none"});
 btnTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
@@ -273,14 +253,119 @@ document.getElementById("whatsappBtn").addEventListener("click",()=>{
   window.open("https://wa.me/32491255954?text=Hello%2C%20I%20would%20like%20to%20book%20a%20transfer.","_blank");
 });
 
-let map,dirService,dirRenderer,ac1,ac2;let lastKM=0,lastMins=0;const ratePerKm=4.5;let vehicle={name:"Lexus",multi:1.00};
+/* -------- Maps / Route ---------- */
+let map,dirService,dirRenderer,ac1,ac2;
+let lastKM=0,lastMins=0;
+const ratePerKm=4.5;
+let vehicle={name:"Lexus",multi:1.00};
+
 function initAll(){
-  map=new google.maps.Map(document.getElementById('map'),{center:{lat:50.850,lng:4.351},zoom:9,mapTypeControl:false,streetViewControl:false});
+  map=new google.maps.Map(document.getElementById('map'),{
+    center:{lat:50.850,lng:4.351},zoom:9,mapTypeControl:false,streetViewControl:false
+  });
   dirService=new google.maps.DirectionsService();
-  dirRenderer=new google.maps.DirectionsRenderer({map,polylineOptions:{strokeColor:'#e11900',strokeWeight:5}});
+  dirRenderer=new google.maps.DirectionsRenderer({
+    map, suppressMarkers:false,
+    polylineOptions:{strokeColor:'#e11900',strokeWeight:5}
+  });
   ac1=new google.maps.places.Autocomplete(document.getElementById('pickup'),{types:['geocode']});
   ac2=new google.maps.places.Autocomplete(document.getElementById('dropoff'),{types:['geocode']});
+
+  // Varsayılan değerler
   document.getElementById('pickup').value="Mortsel, Belgium";
   document.getElementById('dropoff').value="Brussels Airport (BRU), Leopoldlaan, Zaventem, Belgium";
+
   document.getElementById('btnRoute').addEventListener('click',calcAndDrawRoute);
- 
+
+  // Next butonu hesaplasın ve geçsin
+  document.getElementById('btnNext1').addEventListener('click', async ()=>{
+    await calcAndDrawRoute();
+    goTo('step2');
+  });
+
+  // Araç seçimi
+  document.querySelectorAll('.car').forEach(c=>{
+    c.addEventListener('click',()=>{
+      document.querySelectorAll('.car').forEach(x=>x.classList.remove('selected'));
+      c.classList.add('selected');
+      vehicle={name:c.dataset.name,multi:parseFloat(c.dataset.multi)};
+    });
+  });
+
+  // Gönderimler
+  document.getElementById('sendMail').addEventListener('click',sendEmail);
+  document.getElementById('sendWA').addEventListener('click',sendWhatsApp);
+}
+
+async function calcAndDrawRoute(){
+  const origin=document.getElementById('pickup').value.trim();
+  const destination=document.getElementById('dropoff').value.trim();
+  const errBox=document.getElementById('calcError');
+  const okBox=document.getElementById('calcResult');
+  errBox.style.display='none'; okBox.style.display='none';
+
+  if(!origin||!destination){
+    errBox.textContent="Please enter both pickup and drop-off."; errBox.style.display='block'; return;
+  }
+  try{
+    const res=await dirService.route({
+      origin,destination,travelMode:google.maps.TravelMode.DRIVING
+    });
+    dirRenderer.setDirections(res);
+
+    // Mesafe & süre
+    const leg=res.routes[0].legs[0];
+    const meters=leg.distance.value; // m
+    const secs=leg.duration.value;   // s
+    lastKM = (meters/1000);
+    lastMins = Math.round(secs/60);
+    const price = Math.max( (lastKM*ratePerKm*vehicle.multi).toFixed(2), 0 );
+
+    okBox.innerHTML = `<b>Distance:</b> ${lastKM.toFixed(1)} km &nbsp; • &nbsp;
+                       <b>Duration:</b> ${lastMins} mins &nbsp; • &nbsp;
+                       <b>Estimated Price:</b> €${price}`;
+    okBox.style.display='block';
+    return {price};
+  }catch(e){
+    console.error(e);
+    errBox.textContent="Directions error: "+(e.message||"REQUEST_DENIED");
+    errBox.style.display='block';
+  }
+}
+
+/* -------- Summary & Sending ---------- */
+function buildSummary(){
+  const route = `${document.getElementById('pickup').value} → ${document.getElementById('dropoff').value}`;
+  const when = `${document.getElementById('date').value || '—'} ${document.getElementById('time').value || ''}`;
+  const pax = `${document.getElementById('passengers').value || 1}`;
+  const price = (lastKM>0) ? `€${(lastKM*ratePerKm*vehicle.multi).toFixed(2)}` : "€0.00";
+
+  document.getElementById('sRoute').textContent = `Route: ${route}`;
+  document.getElementById('sTime').textContent = `When: ${when} • Passengers: ${pax} • Distance: ${(lastKM?lastKM.toFixed(1):'–')} km • Duration: ${(lastMins||'–')} mins`;
+  document.getElementById('sVehicle').textContent = `Vehicle: ${vehicle.name} (×${vehicle.multi.toFixed(2)})`;
+  document.getElementById('sContact').textContent = `Contact: ${document.getElementById('name').value || '—'} · ${document.getElementById('email').value || '—'} · ${document.getElementById('phone').value || '—'}`;
+  document.getElementById('sPrice').textContent = `Estimated Price: ${price}`;
+}
+
+function sendEmail(){
+  buildSummary();
+  const subject = encodeURIComponent("BXLINE Transfer Request");
+  const body = encodeURIComponent(document.getElementById('summaryBox').innerText);
+  window.location.href = `mailto:bxlaneinternational@gmail.com?subject=${subject}&body=${body}`;
+}
+function sendWhatsApp(){
+  buildSummary();
+  const text = encodeURIComponent(document.getElementById('summaryBox').innerText);
+  window.open(`https://wa.me/32491255954?text=${text}`,'_blank');
+}
+
+/* init after Maps loads */
+window.initAll = initAll;
+</script>
+
+<!-- Google Maps JS (YOUR KEY INSTALLED) -->
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initAll">
+</script>
+</body>
+</html>
