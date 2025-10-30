@@ -1,20 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="canonical" href="https://bxline.be/">
-<title>BXLINE | International Transport & Airport Transfers</title>
-<meta name="description" content="BXLINE offers fast, safe and professional international transport and airport transfers across Belgium and Europe. Book your ride today!">
-<meta name="keywords" content="transport, airport, taxi, BXLINE, Belgium, transfer, Europe, ride">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="BXLINE International Transport">
-<meta property="og:description" content="Professional airport transfers and international rides. Reliable, safe, and fast service.">
-<meta property="og:image" content="https://bxline.be/assets/preview.jpg">
-<meta property="og:url" content="https://bxline.be/">
-<meta name="twitter:card" content="summary_large_image">
-<title>BXLINE – One-Page Booking</title>
-<link rel="stylesheet" href="assets/style.css?v=1">
+  <!-- Charset üstte olsun (parsing için iyi uygulama) -->
+  <meta charset="utf-8" />
+
+  <!-- Tekil title (ikincisini kaldırdım) -->
+  <title>BXLINE | International Transport & Airport Transfers</title>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://bxline.be/">
+
+  <!-- Viewport (çift olanı tekilleştirdim) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Meta açıklamalar -->
+  <meta name="description" content="BXLINE offers fast, safe and professional international transport and airport transfers across Belgium and Europe. Book your ride today!">
+  <!-- keywords artık pek kullanılmıyor ama istersen kalsın -->
+  <meta name="keywords" content="transport, airport, taxi, BXLINE, Belgium, transfer, Europe, ride">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <!-- Sosyal / Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BXLINE">
+  <meta property="og:locale" content="en_BE">
+  <meta property="og:title" content="BXLINE | International Transport & Airport Transfers">
+  <meta property="og:description" content="Professional airport transfers and international rides. Reliable, safe, and fast service.">
+  <meta property="og:image" content="https://bxline.be/assets/preview.jpg">
+  <meta property="og:url" content="https://bxline.be/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BXLINE | International Transport & Airport Transfers">
+  <meta name="twitter:description" content="Professional airport transfers and international rides. Reliable, safe, and fast service.">
+  <meta name="twitter:image" content="https://bxline.be/assets/preview.jpg">
+
+  <!-- Dil/ülke alternatifi tek sayfa için en azından en varsayılanı -->
+  <link rel="alternate" href="https://bxline.be/" hreflang="en" />
+
+  <!-- Favicons (varsa dosyaları ekle; yoksa silebilirsin) -->
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0a3a52">
+
+  <!-- Performans: preconnect / dns-prefetch (Maps ve statikler) -->
+  <link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://maps.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//maps.googleapis.com">
+  <link rel="dns-prefetch" href="//maps.gstatic.com">
+
+  <!-- Öne çıkan görseli preload (mevcutsa) -->
+  <link rel="preload" as="image" href="https://bxline.be/assets/preview.jpg" imagesrcset="https://bxline.be/assets/preview.jpg">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/style.css?v=1">
+
+  <!-- Structured Data: TaxiService (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TaxiService",
+    "name": "BXLINE",
+    "url": "https://bxline.be/",
+    "logo": "https://bxline.be/assets/preview.jpg",
+    "image": "https://bxline.be/assets/preview.jpg",
+    "description": "International transport and airport transfers across Belgium and Europe.",
+    "telephone": "+32491255954",
+    "email": "info@bxline.be",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Belgium"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Excelsiorlaan 31",
+      "addressLocality": "Zaventem",
+      "postalCode": "1930",
+      "addressCountry": "BE"
+    },
+    "sameAs": [
+      "https://wa.me/32491255954"
+    ],
+    "priceRange": "€€",
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "servicePhone": {
+        "@type": "ContactPoint",
+        "telephone": "+32491255954",
+        "contactType": "customer support",
+        "availableLanguage": ["en","nl","fr","tr"]
+      }
+    }
+  }
+  </script>
+
+  <!-- Güvenlik notu (bilgi amaçlı): Maps API anahtarını Google Cloud’da HTTP referer ile kısıtla -->
+  <!-- Referrer restriction: https://console.cloud.google.com/apis/credentials  -->
 </head>
 <body>
   <!-- HERO -->
@@ -83,15 +165,15 @@
       <p class="sub">Select your car. (Price multiplier applies to base price.)</p>
       <div class="cars">
         <div class="car" data-name="Lexus" data-multi="1.00">
-          <div class="img"><img src="assets/lexus.jpg" alt="Lexus" class="shrink"></div>
+          <div class="img"><img src="assets/lexus.jpg" alt="Lexus" class="shrink" loading="lazy" decoding="async"></div>
           <div class="name">Lexus · ×1.00</div>
         </div>
         <div class="car" data-name="Tesla Model Y" data-multi="1.15">
-          <div class="img"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y" class="shrink"></div>
+          <div class="img"><img src="assets/tesla-model-y.jpg" alt="Tesla Model Y" class="shrink" loading="lazy" decoding="async"></div>
           <div class="name">Tesla Model Y · ×1.15</div>
         </div>
         <div class="car" data-name="Renault Arkana" data-multi="0.95">
-          <div class="img"><img src="assets/renault-arkana.jpg" alt="Renault Arkana"></div>
+          <div class="img"><img src="assets/renault-arkana.jpg" alt="Renault Arkana" loading="lazy" decoding="async"></div>
           <div class="name">Renault Arkana · ×0.95</div>
         </div>
       </div>
@@ -137,9 +219,9 @@
       <div class="payWrap">
         <div style="font-weight:700;color:#04507a">Pay Online (Card) — Coming Soon</div>
         <div class="payIcons">
-          <svg viewBox="0 0 80 54"><rect width="80" height="54" rx="6" fill="#1a1f71"/><text x="40" y="34" text-anchor="middle" font-size="20" fill="#fff">VISA</text></svg>
-          <svg viewBox="0 0 80 54"><rect width="80" height="54" rx="6" fill="#eb001b"/><circle cx="50" cy="27" r="18" fill="#f79e1b"/><circle cx="30" cy="27" r="18" fill="#ff5f00" opacity=".75"/></svg>
-          <svg viewBox="0 0 80 54"><rect width="80" height="54" rx="6" fill="#003087"/><text x="40" y="34" text-anchor="middle" font-size="16" fill="#fff">MAESTRO</text></svg>
+          <svg viewBox="0 0 80 54" aria-hidden="true"><rect width="80" height="54" rx="6" fill="#1a1f71"/><text x="40" y="34" text-anchor="middle" font-size="20" fill="#fff">VISA</text></svg>
+          <svg viewBox="0 0 80 54" aria-hidden="true"><rect width="80" height="54" rx="6" fill="#eb001b"/><circle cx="50" cy="27" r="18" fill="#f79e1b"/><circle cx="30" cy="27" r="18" fill="#ff5f00" opacity=".75"/></svg>
+          <svg viewBox="0 0 80 54" aria-hidden="true"><rect width="80" height="54" rx="6" fill="#003087"/><text x="40" y="34" text-anchor="middle" font-size="16" fill="#fff">MAESTRO</text></svg>
         </div>
         <div class="row-actions" style="margin-top:10px">
           <button class="btn" id="btnPay">Pay Now</button>
@@ -169,7 +251,7 @@
           <div>Excelsiorlaan 31, <b>1930 Zaventem</b>, Belgium</div>
           <div class="small" style="margin-top:8px">
             <b>Phone (WhatsApp):</b>
-            <a href="https://wa.me/32491255954" target="_blank">+32 491 25 59 54</a><br/>
+            <a href="https://wa.me/32491255954" target="_blank" rel="noopener">+32 491 25 59 54</a><br/>
             <b>Email:</b>
             <a href="mailto:info@bxline.be">info@bxline.be</a>
           </div>
@@ -191,7 +273,7 @@
   </button>
   <button id="backStart" title="Back to Start" aria-label="Back to Start">⟲</button>
 
-  <!-- LOGIC -->
+  <!-- LOGIC (değiştirmedim) -->
   <script>
     /* ---------- Pricing model ---------- */
     const baseFee = 30.0;
@@ -434,7 +516,7 @@ Phone: ${state.phone}
 Notes: ${state.notes||'-'}`;
     }
 
-    // 🔧 DÜZELTİLEN KISIM — e-posta alıcısı info@bxline.be
+    // e-posta alıcısı info@bxline.be
     function sendEmail(){
       buildSummary();
       const subject=encodeURIComponent('New Transfer Request');
@@ -449,11 +531,13 @@ Notes: ${state.notes||'-'}`;
     }
   </script>
 
-  <!-- GOOGLE MAPS -->
+  <!-- GOOGLE MAPS (anahtarını Cloud’da “Website restriction (HTTP referrers)” ile kısıtlamayı unutma) -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initAll">
-  </script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB3f6S3YNUd7QndOoL4MYGQ6TycnaOLgg&libraries=places&callback=initAll"
+    referrerpolicy="strict-origin-when-cross-origin"></script>
+
+  <noscript>
+    <p style="text-align:center;padding:12px">For full functionality (map & price calculator), please enable JavaScript.</p>
+  </noscript>
 </body>
 </html>
-
-
